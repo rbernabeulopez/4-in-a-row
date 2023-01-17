@@ -1,0 +1,42 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=backend
+      - POSTGRES_PASSWORD=1234
+    networks:
+      - application
+    volumes:
+      - postgres:/var/lib/postgresql
+
+  backend:
+    image: rbernabeulopez/backend
+    ports:
+      - "8080:8080"
+    environment:
+      - BACKEND_DB_DRIVER=org.postgresql.Driver
+      - BACKEND_DB_URL=jdbc:postgresql://db:5432/backend
+      - BACKEND_DB_USERNAME=postgres
+      - BACKEND_DB_PASSWORD=1234
+      - BACKEND_DB_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+    networks:
+      - application
+
+  frontend:
+    image: rbernabeulopez/frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - application
+
+volumes:
+  postgres:
+
+networks:
+    application:
+      driver: bridge

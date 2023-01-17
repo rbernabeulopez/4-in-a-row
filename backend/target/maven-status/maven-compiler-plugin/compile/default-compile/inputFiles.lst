@@ -1,0 +1,9 @@
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\vo\PlayerName.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\infrastructure\controller\PlayerPostController.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\FourInARowApplication.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\application\PlayerCreator.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\exception\InvalidValueException.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\vo\PlayerIpAddress.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\vo\PlayerPassword.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\repository\PlayerRepository.java
+C:\Users\rafael.bernabeu\Documents\4-in-a-row\backend\src\main\java\contexts\player\domain\entities\Player.java
