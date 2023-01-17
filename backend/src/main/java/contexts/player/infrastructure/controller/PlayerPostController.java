@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import contexts.player.application.PlayerCreator;
 import contexts.player.domain.entities.Player;
 
@@ -23,6 +21,7 @@ public class PlayerPostController {
 
     private HttpServletRequest httpServletRequest;
 
+    @ResponseStatus(HttpStatus.CREATED)
      @PostMapping("player")
     public PlayerPostResponse registerPlayer(@RequestBody PlayerPostRequest playerPostRequest) {
         Player player = playerCreator.createPlayer(
