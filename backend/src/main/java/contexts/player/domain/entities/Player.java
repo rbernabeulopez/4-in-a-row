@@ -1,10 +1,13 @@
 package contexts.player.domain.entities;
 
+import contexts.game.domain.entity.Game;
 import jakarta.persistence.*;
 import lombok.*;
 import contexts.player.domain.vo.PlayerIpAddress;
 import contexts.player.domain.vo.PlayerName;
 import contexts.player.domain.vo.PlayerPassword;
+
+import java.util.List;
 
 
 @Entity
@@ -26,4 +29,10 @@ public class Player {
 
     @Embedded
     private PlayerIpAddress ipAddress;
+
+    @ManyToMany
+    private List<Game> games;
+
+    @OneToMany(mappedBy = "winner", fetch = FetchType.EAGER)
+    private List<Game> wonGames;
 }
