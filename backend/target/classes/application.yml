@@ -13,4 +13,4 @@ spring:
     driver-class-name: ${BACKEND_DB_DRIVER:org.h2.Driver}
     username: ${BACKEND_DB_USERNAME:sa}
     password: ${BACKEND_DB_PASSWORD:sa}
-    url: ${BACKEND_DB_URL:jdbc:h2:mem:exampledb}
+    url: ${BACKEND_DB_URL:jdbc:h2:mem:exampledb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=ROW}Q

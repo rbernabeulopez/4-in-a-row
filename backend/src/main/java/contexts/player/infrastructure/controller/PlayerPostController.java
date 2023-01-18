@@ -3,6 +3,7 @@ package contexts.player.infrastructure.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -29,7 +30,12 @@ public class PlayerPostController {
              playerPostRequest.getPassword(),
              httpServletRequest.getRemoteAddr()
         );
-        return PlayerPostMapper.INSTANCE.playerToPlayerPostResponse(player);
+
+        return new PlayerPostResponse(
+            player.getId(),
+            player.getName().getName(),
+            player.getIpAddress().getIpAddress()
+        );
     }
 }
 
@@ -40,17 +46,12 @@ class PlayerPostRequest {
     private String password;
 }
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 class PlayerPostResponse {
     private long id;
     private String name;
     private String ipAddress;
-}
-
-@Mapper
-interface PlayerPostMapper {
-    PlayerPostMapper INSTANCE = Mappers.getMapper(PlayerPostMapper.class);
-
-    PlayerPostResponse playerToPlayerPostResponse(Player player);
 }
