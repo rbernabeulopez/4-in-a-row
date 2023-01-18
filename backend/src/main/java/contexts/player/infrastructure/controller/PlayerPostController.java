@@ -5,14 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import contexts.player.application.PlayerCreator;
 import contexts.player.domain.entities.Player;
-
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
