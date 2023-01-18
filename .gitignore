@@ -87,3 +87,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Target folders ###
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
