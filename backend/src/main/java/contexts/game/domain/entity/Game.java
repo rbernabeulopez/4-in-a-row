@@ -18,13 +18,13 @@ public class Game {
     @GeneratedValue
     private long id;
 
-    @ManyToMany(mappedBy = "games")
+    @ManyToMany
     private List<Player> players;
 
     @ManyToOne
     private Player winner;
 
-    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Movement> movements;
 
     private boolean finished;
