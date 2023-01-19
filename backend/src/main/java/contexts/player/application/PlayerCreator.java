@@ -24,4 +24,5 @@ public class PlayerCreator {
                 .build();
         return playerRepository.save(player);
     }
+
 }
