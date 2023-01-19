@@ -34,7 +34,7 @@ public class GamePostController {
         return new GamePostResponse(      // TODO: Simple Output Vs. Full Output
                 game.getId(),
                 game.getPlayers().stream().map(Player::getId).collect(Collectors.toList()),
-                game.getWinner(),
+                game.getWinner().getId(),
                 game.getMovements().stream().map(Movement::getId).collect(Collectors.toList()),
                 game.isFinished()
         );
@@ -56,7 +56,7 @@ class GamePostRequest {
 class GamePostResponse {
     private long id;
     private List<Long> players;
-    private Player winner;
+    private Long winner;
     private List<Long> movements;
     private boolean finished;
 }
