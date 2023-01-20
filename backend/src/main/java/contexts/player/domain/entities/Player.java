@@ -30,7 +30,7 @@ public class Player {
     @Embedded
     private PlayerIpAddress ipAddress;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Game> games;
 
     @OneToMany(mappedBy = "winner", fetch = FetchType.EAGER)
