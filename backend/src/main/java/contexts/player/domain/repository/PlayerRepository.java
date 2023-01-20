@@ -6,4 +6,5 @@ import contexts.player.domain.entities.Player;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
+
 }

@@ -23,8 +23,6 @@ public class GameGetController {
 
     private GameFinder gameFinder;
 
-    private HttpServletRequest httpServletRequest;
-
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping("/{id}/history")
     public List<GameGetResponse> getHistory(@PathVariable long id) {
