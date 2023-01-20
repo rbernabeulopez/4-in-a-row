@@ -29,8 +29,8 @@ public class PlayerPostController {
 
         return new PlayerPostResponse(
             player.getId(),
-            player.getName().getName(),
-            player.getIpAddress().getIpAddress()
+            player.getName(),
+            player.getIpAddress()
         );
     }
 }
