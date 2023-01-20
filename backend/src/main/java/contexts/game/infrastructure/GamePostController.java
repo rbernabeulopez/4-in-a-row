@@ -38,6 +38,7 @@ class GamePostRequest {
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 class GamePostResponse {
     private long id;
 }
