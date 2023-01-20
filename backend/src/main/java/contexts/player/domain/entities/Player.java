@@ -3,9 +3,6 @@ package contexts.player.domain.entities;
 import contexts.game.domain.entity.Game;
 import jakarta.persistence.*;
 import lombok.*;
-import contexts.player.domain.vo.PlayerIpAddress;
-import contexts.player.domain.vo.PlayerName;
-import contexts.player.domain.vo.PlayerPassword;
 
 import java.util.List;
 
@@ -21,14 +18,11 @@ public class Player {
     @GeneratedValue
     private long id;
 
-    @Embedded
-    private PlayerName name;
+    private String name;
 
-    @Embedded
-    private PlayerPassword password;
+    private String password;
 
-    @Embedded
-    private PlayerIpAddress ipAddress;
+    private String ipAddress;
 
     @ManyToMany
     private List<Game> games;
