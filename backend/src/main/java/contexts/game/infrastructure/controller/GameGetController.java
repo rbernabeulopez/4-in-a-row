@@ -22,7 +22,7 @@ public class GameGetController {
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping("/{id}/history")
+    @GetMapping("{id}")
     public List<GameGetResponse> getHistory(@PathVariable long id) {
         List<Game> games = gameFinder.findPlayerGames(id);
         return games.stream().map(GameGetMapper.INSTANCE::gameToGameGetResponse).toList();
