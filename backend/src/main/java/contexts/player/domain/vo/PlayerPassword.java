@@ -16,7 +16,7 @@ public class PlayerPassword {
     private String password;
 
     public PlayerPassword(String password) {
-        if (password.length() < 8 || password.length() > 20) {
+        if (password.length() < 1 || password.length() > 20) {
             throw new InvalidValueException("Password must be between 8 and 20 characters");
         }
         this.password = password;
