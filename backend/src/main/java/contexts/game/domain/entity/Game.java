@@ -18,7 +18,7 @@ public class Game {
     @GeneratedValue
     private long id;
 
-    @ManyToMany(mappedBy = "games")
+    @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
     private List<Player> players;
 
     @ManyToOne

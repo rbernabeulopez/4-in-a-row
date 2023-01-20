@@ -1,6 +1,6 @@
 package contexts.player.application;
 
-import contexts.player.domain.exception.InvalidValueException;
+import contexts.exception.domain.InvalidValueException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,9 @@ public class PlayerCreator {
     public Player createPlayer(String name, String password, String ipAddress) {
         log.info("Creating contexts.player with name {} from ipAddress {}", name, ipAddress);
 
-        Objects.requireNonNull(name, "Player name cannot be null");
+        if(name == null) {
+            throw new InvalidValueException("Player name cannot be null");
+        }
 
         if (password.length() < 8 || password.length() > 20) {
             throw new InvalidValueException("Password must be between 8 and 20 characters");

@@ -2,9 +2,7 @@ package contexts.game.infrastructure.controller;
 
 import contexts.game.domain.entity.Game;
 import contexts.game.application.GameFinder;
-import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//Histórico de partidas
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1")
@@ -23,7 +20,6 @@ public class GameGetController {
 
     private GameFinder gameFinder;
 
-    private HttpServletRequest httpServletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping("/{id}/history")
@@ -38,11 +34,17 @@ public class GameGetController {
 @Setter
 class GameGetResponse {
     private long id;
-    private Player winner;
-    private List<Player> players;
-    private List<Movement> movements;
+    private GamePlayerGetResponse winner;
+    private List<GamePlayerGetResponse> players;
     private boolean finished;
 
+}
+
+@Getter
+@Setter
+class GamePlayerGetResponse {
+    private long id;
+    private String name;
 }
 
 @Mapper
@@ -50,4 +52,6 @@ interface GameGetMapper {
     GameGetMapper INSTANCE = Mappers.getMapper(GameGetMapper.class);
 
     GameGetResponse gameToGameGetResponse(Game game);
+
+    GamePlayerGetResponse playerToGamePlayerGetResponse(Player player);
 }
