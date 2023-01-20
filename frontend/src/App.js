@@ -6,7 +6,7 @@ const App = () => {
   return (
       <BrowserRouter>
           <Routes>
-              <Route path="/form">
+              <Route path="/register">
                   <Route index element={<Form/>}/>
               </Route>
           </Routes>
