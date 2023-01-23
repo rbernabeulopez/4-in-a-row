@@ -4,20 +4,22 @@ import contexts.game.domain.entity.Game;
 import contexts.game.domain.repository.GameRepository;
 import contexts.player.application.PlayerFinder;
 import contexts.player.domain.entities.Player;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
+@Slf4j
 public class GameCreator {
-    @Autowired
     private GameRepository gameRepository;
-    @Autowired
     private PlayerFinder playerFinder;
 
     public Game createGame(Long player1Id) {
         Player player = playerFinder.findPlayer(player1Id);
+        log.info("Creating game for player {}", player);
 
         return gameRepository.save(
                 Game.builder()
