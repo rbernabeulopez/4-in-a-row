@@ -1,4 +1,4 @@
-package contexts.security.infrastructure;
+package contexts.security.infrastructure.configuration;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

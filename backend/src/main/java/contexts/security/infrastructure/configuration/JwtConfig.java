@@ -1,4 +1,4 @@
-package contexts.security.infrastructure;
+package contexts.security.infrastructure.configuration;
 
 import lombok.Getter;
 import lombok.Setter;

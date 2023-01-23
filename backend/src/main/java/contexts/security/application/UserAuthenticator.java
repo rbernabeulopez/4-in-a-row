@@ -2,7 +2,7 @@ package contexts.security.application;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import contexts.security.infrastructure.JwtConfig;
+import contexts.security.infrastructure.configuration.JwtConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

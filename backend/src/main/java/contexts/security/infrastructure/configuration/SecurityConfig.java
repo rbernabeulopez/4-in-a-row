@@ -1,4 +1,4 @@
-package contexts.security.infrastructure;
+package contexts.security.infrastructure.configuration;
 
 import contexts.security.application.UserFinder;
 import lombok.AllArgsConstructor;
