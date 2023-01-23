@@ -7,5 +7,5 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
-public class UnitTestCase {
+public class UnitTestsBase {
 }

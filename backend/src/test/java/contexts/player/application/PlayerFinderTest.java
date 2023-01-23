@@ -1,6 +1,6 @@
 package contexts.player.application;
 
-import contexts.UnitTestCase;
+import contexts.UnitTestsBase;
 import contexts.exception.domain.EntityNotFoundException;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PlayerFinderTest extends UnitTestCase {
+public class PlayerFinderTest extends UnitTestsBase {
     @InjectMocks
     private PlayerFinder playerFinder;
 

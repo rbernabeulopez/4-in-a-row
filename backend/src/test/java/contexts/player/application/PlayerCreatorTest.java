@@ -1,6 +1,6 @@
 package contexts.player.application;
 
-import contexts.UnitTestCase;
+import contexts.UnitTestsBase;
 import contexts.exception.domain.InvalidValueException;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PlayerCreatorTest extends UnitTestCase {
+public class PlayerCreatorTest extends UnitTestsBase {
 
     @InjectMocks
     private PlayerCreator playerCreator;
