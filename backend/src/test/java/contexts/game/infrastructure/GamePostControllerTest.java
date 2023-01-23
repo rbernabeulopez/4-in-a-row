@@ -1,6 +1,7 @@
 package contexts.game.infrastructure;
 
 import contexts.IntegrationTestsBase;
+import contexts.player.application.PlayerMother;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,11 +19,7 @@ class GamePostControllerTest extends IntegrationTestsBase {
     @Test
     void createGameOK() throws Exception {
         GamePostRequest gamePostRequest = GamePostRequestMother.basic();
-        Player player = playerRepository.save(Player.builder()
-                .name("test")
-                .password("testtest")
-                .ipAddress("0:0:0:0:0:0:0:1")
-                .build());
+        Player player = playerRepository.save(PlayerMother.basicWithId(1L));
 
         MvcResult mvcResult = assertRequestWithBody(
                 "POST",
