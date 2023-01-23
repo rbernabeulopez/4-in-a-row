@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@SuppressWarnings("ALL")
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1")
