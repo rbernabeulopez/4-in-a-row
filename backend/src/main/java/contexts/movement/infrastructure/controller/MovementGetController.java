@@ -3,7 +3,6 @@ import contexts.game.domain.entity.Game;
 import contexts.movement.application.MovementFinder;
 import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.*;
 
 import org.mapstruct.Mapper;

@@ -4,7 +4,6 @@ import contexts.game.domain.entity.Game;
 import contexts.game.application.GameFinder;
 import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
