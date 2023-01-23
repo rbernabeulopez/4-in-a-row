@@ -4,16 +4,14 @@ import contexts.UnitTestsBase;
 import contexts.game.domain.entity.Game;
 import contexts.game.domain.repository.GameRepository;
 import contexts.player.application.PlayerFinder;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class GameCreatorTest extends UnitTestsBase {
+public class GameCreatorTest extends UnitTestsBase {
     @InjectMocks
     private GameCreator gameCreator;
     @Mock
@@ -22,7 +20,7 @@ class GameCreatorTest extends UnitTestsBase {
     private PlayerFinder playerFinder;
 
     @Test
-    void shouldCreateGame() {
+    public void shouldCreateGame() {
         Game gameExpected = GameMother.basicWithId(1L);
 
         when(gameRepository.save(any())).thenReturn(gameExpected);
