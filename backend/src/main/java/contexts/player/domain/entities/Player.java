@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Player {
     @Id
     @GeneratedValue
@@ -24,7 +25,7 @@ public class Player {
 
     private String ipAddress;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Game> games;
 
     @OneToMany(mappedBy = "winner", fetch = FetchType.EAGER)
