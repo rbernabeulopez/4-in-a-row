@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/game")
 public class GamePostController {
     private GameCreator gameCreator;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("game")
+    @PostMapping
     public GamePostResponse createGame(@RequestBody GamePostRequest gamePostRequest) {
         Game game = gameCreator.createGame(
                 gamePostRequest.getPlayer1Id()
