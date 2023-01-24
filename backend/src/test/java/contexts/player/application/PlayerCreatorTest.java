@@ -4,14 +4,15 @@ import contexts.UnitTestsBase;
 import contexts.exception.domain.InvalidValueException;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PlayerCreatorTest extends UnitTestsBase {
+class PlayerCreatorTest extends UnitTestsBase {
 
     @InjectMocks
     private PlayerCreator playerCreator;
@@ -19,10 +20,14 @@ public class PlayerCreatorTest extends UnitTestsBase {
     @Mock
     private PlayerRepository playerRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @Test
-    public void shouldCreatePlayer() {
+    void shouldCreatePlayer() {
         Player expectedPlayer = PlayerMother.basicWithId(0L);
 
+        when(passwordEncoder.encode(expectedPlayer.getPassword())).thenReturn(expectedPlayer.getPassword());
         when(playerRepository.save(any())).thenReturn(expectedPlayer);
 
         Player actualPlayer =
@@ -36,11 +41,12 @@ public class PlayerCreatorTest extends UnitTestsBase {
         assertEquals(expectedPlayer.getPassword(), actualPlayer.getPassword());
         assertEquals(expectedPlayer.getIpAddress(), actualPlayer.getIpAddress());
 
+        verify(passwordEncoder, times(1)).encode(expectedPlayer.getPassword());
         verify(playerRepository, times(1)).save(expectedPlayer);
     }
 
     @Test
-    public void shouldThrowInvalidValueExceptionWhenNameIsNull() {
+    void shouldThrowInvalidValueExceptionWhenNameIsNull() {
         Player player = PlayerMother.basicWithNullName();
 
         InvalidValueException exception = assertThrows(InvalidValueException.class, () -> {
@@ -52,11 +58,12 @@ public class PlayerCreatorTest extends UnitTestsBase {
         });
 
         assertEquals("Player name cannot be null", exception.getMessage());
+        verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }
 
     @Test
-    public void shouldThrowInvalidValueExceptionWhenPasswordIsShort() {
+    void shouldThrowInvalidValueExceptionWhenPasswordIsShort() {
         Player player = PlayerMother.basicWithShortPassword();
 
         InvalidValueException exception = assertThrows(InvalidValueException.class, () -> {
@@ -68,11 +75,12 @@ public class PlayerCreatorTest extends UnitTestsBase {
         });
 
         assertEquals("Password must be between 8 and 20 characters", exception.getMessage());
+        verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }
 
     @Test
-    public void shouldThrowInvalidValueExceptionWhenPasswordIsLong() {
+    void shouldThrowInvalidValueExceptionWhenPasswordIsLong() {
         Player player = PlayerMother.basicWithLongPassword();
 
         InvalidValueException exception = assertThrows(InvalidValueException.class, () -> {
@@ -84,11 +92,12 @@ public class PlayerCreatorTest extends UnitTestsBase {
         });
 
         assertEquals("Password must be between 8 and 20 characters", exception.getMessage());
+        verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }
 
     @Test
-    public void shouldThrowInvalidValueExceptionWhenIpAddressIsInvalid() {
+    void shouldThrowInvalidValueExceptionWhenIpAddressIsInvalid() {
         Player player = PlayerMother.basicWithInvalidIpAddress();
 
         InvalidValueException exception = assertThrows(InvalidValueException.class, () -> {
@@ -100,6 +109,7 @@ public class PlayerCreatorTest extends UnitTestsBase {
         });
 
         assertEquals("Invalid IP address", exception.getMessage());
+        verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }
 }
