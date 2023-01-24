@@ -3,6 +3,15 @@ package contexts.player.application;
 import contexts.player.domain.entities.Player;
 
 public class PlayerMother {
+    public static Player basicWithoutId() {
+        return Player.builder()
+                .name("Player 1")
+                .password("12345678")
+                .ipAddress("192.168.30.24")
+                .build();
+    }
+
+
     public static Player basicWithId(Long id) {
         return Player.builder()
             .id(id)

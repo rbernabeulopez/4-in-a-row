@@ -3,19 +3,20 @@ package contexts.player.application;
 import contexts.exception.domain.InvalidValueException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class PlayerCreator {
     private PlayerRepository playerRepository;
+    private PasswordEncoder passwordEncoder;
 
     private boolean isValidIp(String ip) {
         try {
@@ -43,7 +44,7 @@ public class PlayerCreator {
 
         Player player = Player.builder()
                 .name(name)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .ipAddress(ipAddress)
                 .build();
         return playerRepository.save(player);

@@ -4,7 +4,7 @@ import contexts.UnitTestsBase;
 import contexts.exception.domain.EntityNotFoundException;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PlayerFinderTest extends UnitTestsBase {
+class PlayerFinderTest extends UnitTestsBase {
     @InjectMocks
     private PlayerFinder playerFinder;
 
@@ -21,7 +21,7 @@ public class PlayerFinderTest extends UnitTestsBase {
     private PlayerRepository playerRepository;
 
     @Test
-    public void shouldReturnPlayer() {
+    void shouldReturnPlayer() {
         Player expectedPlayer = PlayerMother.basicWithId(1L);
         when(playerRepository.findById(expectedPlayer.getId())).thenReturn(Optional.of(expectedPlayer));
 
@@ -33,7 +33,7 @@ public class PlayerFinderTest extends UnitTestsBase {
     }
 
     @Test
-    public void shouldThrowExceptionWhenPlayerNotFound() {
+    void shouldThrowExceptionWhenPlayerNotFound() {
         when(playerRepository.findById(1L)).thenReturn(Optional.empty());
 
         EntityNotFoundException actualException =
