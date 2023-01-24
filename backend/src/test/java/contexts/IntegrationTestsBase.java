@@ -1,6 +1,9 @@
 package contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import contexts.game.domain.repository.GameRepository;
+import contexts.player.domain.repository.PlayerRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,14 +18,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class IntegrationTestCase {
+public class IntegrationTestsBase {
 
     @Autowired
     protected MockMvc mockMvc;
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    protected PlayerRepository playerRepository;
+
+    @Autowired
+    protected GameRepository gameRepository;
+
+    @AfterEach
+    void tearDown() {
+        gameRepository.deleteAll();
+        playerRepository.deleteAll();
+    }
 
 
     protected MvcResult assertRequest(

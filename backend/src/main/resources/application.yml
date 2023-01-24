@@ -14,3 +14,11 @@ spring:
     username: ${BACKEND_DB_USERNAME:sa}
     password: ${BACKEND_DB_PASSWORD:sa}
     url: ${BACKEND_DB_URL:jdbc:h2:mem:exampledb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=ROW}
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+application:
+  jwt:
+    key: cSK8+%tbKMqT!bsj/@?6vu;AZY#mFCWeY_NbKk0%@*umud1O23#a0n_&S_XIkeE
+    expiration: 86400000
