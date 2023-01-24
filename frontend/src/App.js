@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Form } from "./view/Register";
 import { Login } from "./view/Login
+import { Historical} from "./component/Historical"
 import { CreateGame } from "./create-game/CreateGame";
 
 const App = () => {
@@ -16,6 +17,9 @@ const App = () => {
         <Route path="/login">
         <Route index element={<Login />}/>
         </Route>
+        <Route path="/historical">
+                <Route index element={<Historical />}/>
+                </Route>
       </Routes>
     </BrowserRouter>
   );
