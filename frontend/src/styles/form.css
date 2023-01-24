@@ -1,0 +1,24 @@
+.user-data-form {
+    width: 300px;
+}
+.user-data-form-forgot {
+    float: right;
+}
+.user-data-form-button {
+    width: 100%;
+}
+
+.user-data-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px 25px 25px 25px;
+    border: 1px solid #777;
+    border-radius: 30px;
+}
+
+.user-data-title {
+    margin-bottom: 30px;
+    text-align: center;
+}
