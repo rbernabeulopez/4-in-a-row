@@ -18,3 +18,7 @@ application:
   jwt:
     key: cSK8+%tbKMqT!bsj/@?6vu;AZY#mFCWeY_NbKk0%@*umud1O23#a0n_&S_XIkeE
     expiration: 86400000
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
