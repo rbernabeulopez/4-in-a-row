@@ -1,4 +1,4 @@
-package contexts.game.infrastructure;
+package contexts.game.infrastructure.controller;
 
 import contexts.IntegrationTestsBase;
 import contexts.player.application.PlayerMother;
@@ -8,12 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
 class GamePostControllerTest extends IntegrationTestsBase {
 
     @Test
     void createGameOK() throws Exception {
         Player player = playerRepository.save(PlayerMother.basicWithId(1L));
-        GamePostRequest gamePostRequest = GamePostRequestMother.basicWithPlayerId(player.getId());
+        Object gamePostRequest = GamePostRequestMother.basicWithPlayerId(player.getId());
 
         MvcResult mvcResult = assertRequestWithBody(
                 "POST",

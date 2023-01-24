@@ -1,4 +1,4 @@
-package contexts.game.infrastructure;
+package contexts.game.infrastructure.controller;
 
 import contexts.game.application.GameCreator;
 import contexts.game.domain.entity.Game;

@@ -1,4 +1,4 @@
-package contexts.game.infrastructure;
+package contexts.game.infrastructure.controller;
 
 public class GamePostRequestMother {
     public static GamePostRequest basicWithPlayerId(long playerId) {
