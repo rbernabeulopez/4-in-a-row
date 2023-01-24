@@ -102,30 +102,19 @@ export const Table =() => {
 
   const putPiece = (columnIndex) => {
     
-   //player ? setPlayer(false): setPlayer(true); // change this to id players
-  //setMovement({...movement, col: columnIndex, player});
+  setMovement({...movement, col: columnIndex, player});
     // send to websocket endpoint
-    receiveMovement(movementWS);
     
   }
 
   function receiveMovement(movementWS) {
-    //data.movements.push(movementWS);
-    //setData(data);
+    // receive call from websocket
     const updateData = {...data,movements: [...data.movements, movementWS]};
     setData(updateData);
     console.log(updateData);
     initBoard(updateData.movements, updateData.players);
-    /*console.log(setData({...data, movements: [{
-      col: movementWS.col,
-      player_id: movementWS.player_id,
-    }]}));  */
+   
   }
-
-
-
-  //console.log(movement)
-
 
     return (
         <div>
