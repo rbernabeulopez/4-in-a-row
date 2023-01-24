@@ -7,12 +7,19 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 @Slf4j
 public class GameFinder {
     private GameRepository gameRepository;
-    public Game findGame(long id) {
-        return gameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Game with id " + id + " not found"));
+
+    public Game findGame(long gameId) {
+        return gameRepository.findById(gameId).orElseThrow(() -> new EntityNotFoundException("Game with gameId " + gameId + " not found"));
+    }
+
+    public List<Game> findGamesByPlayer(long playerId) {
+        return gameRepository.findByPlayers_Id(playerId);
     }
 }

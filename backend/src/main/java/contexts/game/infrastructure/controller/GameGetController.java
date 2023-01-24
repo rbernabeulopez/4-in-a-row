@@ -45,6 +45,13 @@ public class GameGetController {
                 game.isFinished()
                 );
     }
+
+//    @GetMapping("player/{playerId}")
+//    public List<Game> getGameByPlayer(@PathVariable long playerId) {
+//        List<Game> games = gameFinder.findGamesByPlayer(playerId);
+//
+//        return games;
+//    }
 }
 
 

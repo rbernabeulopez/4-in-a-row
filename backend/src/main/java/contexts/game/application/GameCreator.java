@@ -18,7 +18,7 @@ public class GameCreator {
     private PlayerFinder playerFinder;
 
     public Game createGame(Long player1Id) {
-        Player player = playerFinder.findPlayer(player1Id);
+        Player player = playerFinder.findPlayer(player1Id); // TODO: add game to player
         log.info("Creating game for player {}", player);
 
         return gameRepository.save(
