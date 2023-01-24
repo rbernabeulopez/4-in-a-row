@@ -20,6 +20,7 @@ public class GamePostController {
         Game game = gameCreator.createGame(
                 gamePostRequest.getPlayer1Id()
         );
+        gameCreator.updatePlayer(game);
 
         return new GamePostResponse(
                 game.getId()
