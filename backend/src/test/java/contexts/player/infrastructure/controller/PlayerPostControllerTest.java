@@ -1,13 +1,13 @@
 package contexts.player.infrastructure.controller;
 
-import contexts.IntegrationTestCase;
+import contexts.IntegrationTestsBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class PlayerPostControllerTest extends IntegrationTestCase {
+class PlayerPostControllerTest extends IntegrationTestsBase {
 
     @Test
     void registerPlayerOK() throws Exception {
