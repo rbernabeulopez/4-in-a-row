@@ -10,33 +10,20 @@ export const CreateGame = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setPlayer1Id(localStorage.getItem("playerId"));
     createGame(player1Id);
-    //       .then(
-    //   navigate("/game/" + localStorage.getItem("gameId"))
-    // );
+
+    // TODO: NAVIGATE TO GAME /: GAMEID
+    // TODO: SUBSCRIBE TO GAME VIA SOCKET
   };
 
   return (
     <Container>
       <Row>
         <Col sm={4}>
-          <form class="mt-5" onSubmit={handleSubmit}>
-            <div class="mb-3 mt-5">
-              <label for="name" class="form-label">
-                Jugador 1
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                value={player1Id}
-                onChange={(e) => setPlayer1Id(e.target.value)}
-                aria-describedby="player1Id"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Create Game
-            </button>
-          </form>
+          <button class="btn btn-primary" onClick={handleSubmit}>
+            Create Game
+          </button>
         </Col>
       </Row>
     </Container>
