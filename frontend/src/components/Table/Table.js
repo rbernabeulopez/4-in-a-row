@@ -2,6 +2,21 @@ import React, { useEffect, useState } from "react";
 
 export const Table =() => {
 
+    const [player, setPlayer] = useState(true);
+
+    const [movement, setMovement] = useState({
+      row: 0,
+      col: 0,
+      player_id: 0,
+    });
+
+    const [movementWS, setMovementWS] = useState({
+      row: 3,
+      col: 3, 
+      player_id: 1, 
+    });
+
+
     const [data, setData] = useState({
         players: [{
             id: 0,
@@ -21,6 +36,7 @@ export const Table =() => {
                 col: 1,
                 player_id: 1,
             }
+            
         ],
         winner: null,
         finished: false
@@ -30,27 +46,23 @@ export const Table =() => {
 
 
     // Starts new game
-    const initBoard= () => {
+    const initBoard= (movements, players) => {
         // Create a blank 6x7 matrix
         let generatedboard = [];
         for (let r = 0; r < 6; r++) {
           let row = [];
-          // If movement = player 1, else player 2
           for (let c = 0; c < 7; c++) {
-            console.log(r,c);
-            const movement = data.movements.find((movement) => movement.row === r && movement.col === c);
-            console.log(movement, data.players);
+            const movement = movements.find((movement) => movement.row === r && movement.col === c);
             if(movement == null){
                 row.push(0);
-            } else if(movement.player_id == data.players[0].id){
+            } else if(movement.player_id === players[0].id){
                 row.push(1);
-            } else if(movement.player_id == data.players[1].id){
+            } else if(movement.player_id === players[1].id){
                 row.push(2);
             } else {
                 row.push(0);
             }
-           
-            }
+          }
           generatedboard.push(row);
         }
         setBoard(generatedboard);
@@ -76,7 +88,7 @@ export const Table =() => {
       
     return (
       <td>
-        <div className="cell" onClick={() => {console.log("cell")}}>
+        <div className="cell" onClick={() => putPiece(columnIndex)}>
           <div className={color}></div>
         </div>
       </td>
@@ -85,12 +97,35 @@ export const Table =() => {
 
 
   useEffect(()=> {
-    initBoard();
+    initBoard(data.movements, data.players);
   }, [])
 
-  const putPiece = () => {
-
+  const putPiece = (columnIndex) => {
+    
+   //player ? setPlayer(false): setPlayer(true); // change this to id players
+  //setMovement({...movement, col: columnIndex, player});
+    // send to websocket endpoint
+    receiveMovement(movementWS);
+    
   }
+
+  function receiveMovement(movementWS) {
+    //data.movements.push(movementWS);
+    //setData(data);
+    const updateData = {...data,movements: [...data.movements, movementWS]};
+    setData(updateData);
+    console.log(updateData);
+    initBoard(updateData.movements, updateData.players);
+    /*console.log(setData({...data, movements: [{
+      col: movementWS.col,
+      player_id: movementWS.player_id,
+    }]}));  */
+  }
+
+
+
+  //console.log(movement)
+
 
     return (
         <div>
