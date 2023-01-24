@@ -39,27 +39,23 @@ public class PlayerGetController {
             .forEach(movement -> movements.add(
                         new MovementResponse(
                             movement.getId(),
-                            new PlayerResponse(
-                                    movement.getPlayer().getId(),
-                                    movement.getPlayer().getName()
-                            ),
+                                new PlayerResponse(
+                                        movement.getPlayer().getId(),
+                                        movement.getPlayer().getName()
+                                ),
                                 movement.getRow(),
                                 movement.getCol(),
                                 movement.getCreatedAt()
-            )));
+                        )));
 
         // Create response
-        games.forEach(game -> {
-            assert opponent != null;
-
-            response.add(
-                    new PlayerGetResponse(
-                            game.getId(),
-                            new PlayerResponse(opponent.getId(), opponent.getName()),
-                            new PlayerResponse(game.getWinner().getId(), game.getWinner().getName()),
-                movements
-            ));
-        });
+        games.forEach(game -> response.add(
+                new PlayerGetResponse(
+                        game.getId(),
+                        opponent != null ? new PlayerResponse(opponent.getId(), opponent.getName()) : null,
+                        game.getWinner() != null ? new PlayerResponse(game.getWinner().getId(), game.getWinner().getName()) : null,
+                        movements
+                )));
 
         return response;
     }
