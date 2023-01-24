@@ -3,15 +3,12 @@ package contexts.security.infrastructure.controller;
 import contexts.IntegrationTestsBase;
 import contexts.player.application.PlayerMother;
 import contexts.player.domain.entities.Player;
-import contexts.player.domain.repository.PlayerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserPostLoginControllerTest extends IntegrationTestsBase {
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
