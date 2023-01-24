@@ -11,5 +11,4 @@ import java.util.List;
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     List<Game> getByPlayers(Player player);
-
 }
