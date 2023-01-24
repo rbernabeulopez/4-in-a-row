@@ -7,13 +7,13 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: ${BACKEND_DB_DIALECT:org.hibernate.dialect.H2Dialect}
+        dialect: org.hibernate.dialect.H2Dialect
     open-in-view: false
   datasource:
-    driver-class-name: ${BACKEND_DB_DRIVER:org.h2.Driver}
-    username: ${BACKEND_DB_USERNAME:sa}
-    password: ${BACKEND_DB_PASSWORD:sa}
-    url: ${BACKEND_DB_URL:jdbc:h2:mem:exampledb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=ROW}
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:exampletestdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=ROW
   h2:
     console:
       enabled: true

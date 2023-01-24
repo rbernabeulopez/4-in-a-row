@@ -19,4 +19,11 @@ public class PlayerFinder {
             () -> new EntityNotFoundException("Player with id " + id + " not found")
         );
     }
+
+    public Player findByName(String name) {
+        log.info("Searching player with name {}", name);
+        return playerRepository.findByName(name).orElseThrow(
+            () -> new EntityNotFoundException("Player with name " + name + " not found")
+        );
+    }
 }
