@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import {makeSocketConnection} from "../request/webSocketRequest";
+import { makeSocketConnection } from "../request/webSocketRequest";
 import { createGame } from "../request/gameRequest";
 import { Historical } from "../component/Historical";
 
@@ -9,11 +9,11 @@ export const CreateGame = () => {
   const [player1Id, setPlayer1Id] = useState(0);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let playerId = localStorage.getItem("playerId");
-    let gameId = createGame(playerId).then((res) => res);
-    console.log("esto es gameId: "+gameId)
+    let gameId = await createGame(playerId);
+    console.log("esto es gameId: " + gameId);
     makeSocketConnection(gameId, playerId);
     navigate("/table");
 
@@ -25,7 +25,7 @@ export const CreateGame = () => {
     event.preventDefault();
     let playerId = localStorage.getItem("playerId");
     createGame(playerId);
-    navigate("/table")
+    navigate("/table");
 
     // TODO: NAVIGATE TO GAME /: GAMEID
     // TODO: SUBSCRIBE TO GAME VIA SOCKET
@@ -35,7 +35,7 @@ export const CreateGame = () => {
     event.preventDefault();
     setPlayer1Id(localStorage.getItem("playerId"));
     createGame(player1Id);
-    navigate("/historical")
+    navigate("/historical");
 
     // TODO: NAVIGATE TO GAME /: GAMEID
     // TODO: SUBSCRIBE TO GAME VIA SOCKET

@@ -1,13 +1,12 @@
 import axios from "axios";
 
 export function createGame(player1Id) {
-
-    const response = axios({
-    url: '/api/v1/game',
+  const response = axios({
+    url: "/api/v1/game",
     method: "POST",
-    data: {"player1Id": player1Id}
-    })
-    /*
+    data: { player1Id: player1Id },
+  });
+  /*
     .then((res) => {
       res
     })
@@ -16,9 +15,7 @@ export function createGame(player1Id) {
       
     }); 
     */
-    const dataPromise = response.then((response) => response.data)
 
-    // return it
-    return dataPromise
+  // return it
+  return response.then((res) => res.data.id);
 }
-
