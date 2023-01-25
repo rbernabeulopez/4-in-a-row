@@ -1,8 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import { Example } from "./components/Example/Example";
 import { Table } from "./components/Table/Table";
 import { Register } from "./view/Register";
 import Login from "./view/Login";
+import { Historical } from "./component/Historical";
+import { CreateGame } from './create-game/CreateGame';
 
 const App = () => {
   return (
