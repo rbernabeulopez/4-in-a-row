@@ -25,6 +25,8 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .userDetailsService(this.userAppService)
                 .addFilterAfter(jwtTokenVerifierFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
