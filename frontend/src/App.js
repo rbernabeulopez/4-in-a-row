@@ -5,6 +5,7 @@ import NotFound from "./view/NotFound";
 import {useEffect} from "react";
 import { Historical } from "./component/Historical"
 import { CreateGame } from "./create-game/CreateGame";
+import {Table} from "./components/Table/Table";
 
 
 const Redirect = () => {
@@ -30,6 +31,9 @@ const App = () => {
             </Route>
             <Route path="/historical">
                 <Route index element={<Historical />}/>
+            </Route>
+            <Route path="/table">
+                <Route index element={<Table/>}/>
             </Route>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
