@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './table.css'
 
 export const Table =() => {
 
@@ -118,7 +119,6 @@ export const Table =() => {
 
     return (
         <div>
-          
           <table>
             <thead>
             </thead>
