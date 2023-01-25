@@ -35,8 +35,8 @@ public class IntegrationTestsBase {
 
     @AfterEach
     void tearDown() {
-        gameRepository.deleteAll();
         playerRepository.deleteAll();
+        gameRepository.deleteAll();
     }
 
 
