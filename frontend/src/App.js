@@ -3,7 +3,7 @@ import { Register } from "./view/Register";
 import Login from "./view/Login";
 import NotFound from "./view/NotFound";
 import {useEffect} from "react";
-import { Historical} from "./component/Historical"
+import { Historical } from "./component/Historical"
 import { CreateGame } from "./create-game/CreateGame";
 
 
