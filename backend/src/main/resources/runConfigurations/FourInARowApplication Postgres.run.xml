@@ -8,7 +8,7 @@
       <env name="BACKEND_DB_DIALECT" value="org.hibernate.dialect.PostgreSQLDialect" />
     </envs>
     <module name="backend" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="contexts.FourInARowApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="contexts.WebsocketServiceApplication" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="contexts.*" />

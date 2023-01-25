@@ -8,14 +8,13 @@ let eventHandlers =  [];
 let userData = undefined;
 
 const handleNotification = (event) => {
-    console.log("Received notification");
-    infoNotification("Notification", JSON.parse(event.body), "topRight");
+    console.log("Received notification", JSON.parse(event.body));
 };
 
 const listenEvents = (gameId) => {
     infoNotification("Connection established", "Connection to server was established.", "topRight")
     if (stompClient) {
-        stompClient.subscribe(`/game-notifications`, () => console.log("Handled game notifications"));
+        stompClient.subscribe(`/game-notifications`, handleNotification);
         stompClient.send("/service/v1/join-game", {}, JSON.stringify({playerId: 1, gameId: gameId}));
     }
 }
