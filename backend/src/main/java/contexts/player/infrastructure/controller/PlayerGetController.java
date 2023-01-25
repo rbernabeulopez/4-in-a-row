@@ -3,6 +3,7 @@ package contexts.player.infrastructure.controller;
 import contexts.game.domain.entity.Game;
 import contexts.player.application.PlayerFinder;
 import contexts.player.domain.entities.Player;
+import contexts.player.infrastructure.PlayerHistoryMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,27 +20,25 @@ import java.util.List;
 @RequestMapping("api/v1/player")
 public class PlayerGetController {
     private PlayerFinder playerFinder;
+    private PlayerHistoryMapper mapper;
 
     @GetMapping("{playerId}/games")
-    public List<PlayerGetResponse> getPlayerGameHistory(@PathVariable long playerId) {
-        List<PlayerGetResponse> response = new ArrayList<>();
+    public List<PlayerHistoryGameResponse> getPlayerGameHistory(@PathVariable long playerId) {
+        List<PlayerHistoryGameResponse> response = new ArrayList<>();
         List<MovementResponse> movements = new ArrayList<>();
 
         List<Game> games = playerFinder.findGames(playerId);
 
-        Player opponent = games.stream()
-            .flatMap(game -> game.getPlayers().stream())
-            .filter(player -> player.getId() != playerId)
-            .findFirst()
-            .orElse(null);
+        Player player2 = mapper.getOpponent(games, playerId);
+        PlayerResponse opponent = player2 != null ? new PlayerResponse( // Mapping opponent to PlayerResponse if it exists, else null
+                player2.getId(), player2.getName()) : null;
 
-        // Set movements
-        games.stream()
-            .flatMap(game -> game.getMovements().stream())
-            .forEach(movement -> movements.add(
-                        new MovementResponse(
-                            movement.getId(),
-                                new PlayerResponse(
+        // Set movements by iterating over games[].movements[] and adding each movement to the movements list
+        mapper.getMovements(games)
+                .forEach(movement -> movements.add(
+                        new MovementResponse( // Mapping movement to MovementResponse
+                                movement.getId(),
+                                new PlayerResponse( // Mapping player to PlayerResponse
                                         movement.getPlayer().getId(),
                                         movement.getPlayer().getName()
                                 ),
@@ -48,12 +47,17 @@ public class PlayerGetController {
                                 movement.getCreatedAt()
                         )));
 
-        // Create response
+        // Create response, which is a list of the games played by the player, setting the opponent, the winner and the movements of each game
         games.forEach(game -> response.add(
-                new PlayerGetResponse(
+                new PlayerHistoryGameResponse( // Mapping game to PlayerHistoryGameResponse
                         game.getId(),
-                        opponent != null ? new PlayerResponse(opponent.getId(), opponent.getName()) : null,
-                        game.getWinner() != null ? new PlayerResponse(game.getWinner().getId(), game.getWinner().getName()) : null,
+                        opponent,
+                        game.getWinner() != null ?
+                                new PlayerResponse( // Mapping winner to PlayerResponse if it exists, else null
+                                        game.getWinner().getId(),
+                                        game.getWinner().getName()
+                                )
+                                : null,
                         movements
                 )));
 
@@ -63,7 +67,7 @@ public class PlayerGetController {
 
 @Data
 @AllArgsConstructor
-class PlayerGetResponse {
+class PlayerHistoryGameResponse {
     private long id;
     private PlayerResponse opponent;
     private PlayerResponse winner;
