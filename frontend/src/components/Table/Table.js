@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {makeSocketConnection} from "../../request/webSocketRequest";
+import './table.css'
 
 export const Table =() => {
     useEffect(() => {
