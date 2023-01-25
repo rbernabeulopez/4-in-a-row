@@ -24,6 +24,7 @@ const handleConnectionError = () => {
 }
 
 const handleConnection = listenEvents
+
 export const makeSocketConnection =(gameId, userInfo)=>{
     userData = userInfo;
     let Sock = new SockJS(`http://localhost:8080/service/v1`);

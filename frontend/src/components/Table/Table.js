@@ -3,9 +3,11 @@ import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
 
 export const Table =() => {
-    useEffect(() => {
+   /*
+  useEffect(() => {
         makeSocketConnection(1, 1);
     }, []);
+    */
 
     const [player, setPlayer] = useState(true);
 

@@ -5,9 +5,6 @@ import {Button, Col, Container, Row, Table} from 'react-bootstrap';
 
 export const Historical = () => {
 
-    //cuando nos traigamos el id lo podremos poner en el axios
-    const [id, setId] = useState();
-
     //aqui meteremos los datos de la base de datos
     const [data, setData] = useState([]);
 
@@ -57,14 +54,16 @@ export const Historical = () => {
     // la magia del asunto está en como nos traemo el id
 
     useEffect(() => {
+      let number = localStorage.getItem("playerId");
 
-        setId(localStorage.getItem("playerId"));
+        console.log(number)
 
         axios({
-            url: "/api/v1/game/1",
+            url:`/api/v1/player/${number}/games`,
             method: "GET",
         })
         .then((res) => {
+          console.log("Recibido historial")
             setData(res.data)
         })
         .catch((err) => {
@@ -72,11 +71,7 @@ export const Historical = () => {
         })
     }, []);
 
-
-    
-
     //tengo que traerme el id del jugador para enviarlo por el use efect
-
 
     return(
         <Container>

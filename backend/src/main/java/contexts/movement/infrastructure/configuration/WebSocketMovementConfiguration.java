@@ -20,8 +20,6 @@ public class WebSocketMovementConfiguration implements WebSocketMessageBrokerCon
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         //Declare topic prefixes, give our app a destination prefix in which the user will be sending the data to the server
         registry.setApplicationDestinationPrefixes("/api/v1");
-        registry.enableSimpleBroker("/game-notifications");
+        registry.enableSimpleBroker("/join-game");
     }
-
-
 }

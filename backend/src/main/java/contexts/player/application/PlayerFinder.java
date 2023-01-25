@@ -34,7 +34,6 @@ public class PlayerFinder {
 
     public List<Game> findGames(long id) {
         log.info("Searching games of player with id {}", id);
-
         return findPlayer(id).getGames();
     }
 }

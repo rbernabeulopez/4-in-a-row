@@ -18,18 +18,6 @@ import java.util.List;
 public class GameFinder {
     private GameRepository gameRepository;
 
-    public Game findGame(long gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new EntityNotFoundException("Game with gameId " + gameId + " not found"));
-    private PlayerFinder playerFinder;
-    private GameRepository gameRepository;
-
-    public List<Game> findPlayerGames(long id) {
-        log.info("Searching player with id {}", id);
-        Player player = playerFinder.findPlayer(id);
-        return player.getGames();
-    }
-
-
     public Game findGame(long id) {
         log.info("Searching game with id {}", id);
         return gameRepository.findById(id).orElseThrow(
