@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
 
 export const Table =() => {
+    useEffect(() => {
+        makeSocketConnection(1, 1);
+    }, []);
 
     const [player, setPlayer] = useState(true);
 
@@ -119,6 +123,7 @@ export const Table =() => {
 
     return (
         <div>
+          
           <table>
             <thead>
             </thead>
