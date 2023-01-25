@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import {makeSocketConnection} from "../../request/webSocketRequest";
 
 export const Table =() => {
+    useEffect(() => {
+        makeSocketConnection(1, 1);
+    }, []);
 
     const [player, setPlayer] = useState(true);
 
