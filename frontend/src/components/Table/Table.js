@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
+import {Col, List, Row} from "antd";
 
 export const Table =() => {
     useEffect(() => {
-        makeSocketConnection(1, 1);
+        makeSocketConnection(1, localStorage.getItem('playerId'));
     }, []);
 
     const [player, setPlayer] = useState(true);
@@ -75,15 +76,15 @@ export const Table =() => {
 
 
 
- const Row = ({ row }) => {
+ const GameRow = ({ row }) => {
     return (
       <tr>
-        {row.map((cell, i) => <Cell key={i} value={cell} columnIndex={i} />)}
+        {row.map((cell, i) => <GameCell key={i} value={cell} columnIndex={i} />)}
       </tr>
     );
   };
   
-  const Cell = ({ value, columnIndex }) => {
+  const GameCell = ({ value, columnIndex }) => {
     let color = 'white';
     if (value === 1) {
       color = 'red';
@@ -123,14 +124,29 @@ export const Table =() => {
 
     return (
         <div>
-          
-          <table>
-            <thead>
-            </thead>
-            <tbody>
-            {board.map((row, i) => (<Row key={i} row={row} />))}
-            </tbody>
-          </table>
+            <Row>
+                <h1>Connect 4</h1>
+            </Row>
+            <Row style={{padding: '50px'}}>
+                <Col span={6}>
+                    <List
+                        header={<b>Players</b>}
+                        bordered
+                        style={{ width: 300, marginTop: 20 }}
+                        dataSource={data.players}
+                        renderItem={(item) => { return (<List.Item>{item.player_name}</List.Item>) }}
+                    />
+                </Col>
+                <Col span={18}>
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        {board.map((row, i) => (<GameRow key={i} row={row} />))}
+                        </tbody>
+                    </table>
+                </Col>
+            </Row>
         </div>
       );
     }
