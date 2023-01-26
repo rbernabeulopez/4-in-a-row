@@ -30,7 +30,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidValueException.class, GameFullException.class, PlayerDoesNotBelongGameException.class})
+    @ExceptionHandler({InvalidValueException.class})
     public CustomError handleBadRequestExceptions(Exception ex) {
         return generateError(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }

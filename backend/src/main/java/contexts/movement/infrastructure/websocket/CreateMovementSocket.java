@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CreateMovementSocket {
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("join-game")
+    @MessageMapping("make-movement")
     public void joinGame() {
         simpMessagingTemplate.convertAndSend("/game-notifications/1", "Hello");
     }
