@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
 import {Col, List, Row} from "antd";
+import GameRow from "../../component/GameRow";
 
 export const Table =() => {
     useEffect(() => {
@@ -75,40 +76,12 @@ export const Table =() => {
     }
 
 
-
- const GameRow = ({ row }) => {
-    return (
-      <tr>
-        {row.map((cell, i) => <GameCell key={i} value={cell} columnIndex={i} />)}
-      </tr>
-    );
-  };
-  
-  const GameCell = ({ value, columnIndex }) => {
-    let color = 'white';
-    if (value === 1) {
-      color = 'red';
-    } else if (value === 2) {
-      color = 'yellow';
-    }
-      
-    return (
-      <td>
-        <div className="cell" onClick={() => putPiece(columnIndex)}>
-          <div className={color}></div>
-        </div>
-      </td>
-    );
-  };
-
-
   useEffect(()=> {
     initBoard(data.movements, data.players);
   }, [])
 
   const putPiece = (columnIndex) => {
-    
-  setMovement({...movement, col: columnIndex, player});
+    setMovement({...movement, col: columnIndex, player});
     // send to websocket endpoint
     
   }
@@ -119,15 +92,14 @@ export const Table =() => {
     setData(updateData);
     console.log(updateData);
     initBoard(updateData.movements, updateData.players);
-   
   }
 
     return (
-        <div>
+        <div style={{padding: '50px'}}>
             <Row>
                 <h1>Connect 4</h1>
             </Row>
-            <Row style={{padding: '50px'}}>
+            <Row>
                 <Col span={6}>
                     <List
                         header={<b>Players</b>}
@@ -142,11 +114,11 @@ export const Table =() => {
                         <thead>
                         </thead>
                         <tbody>
-                        {board.map((row, i) => (<GameRow key={i} row={row} />))}
+                        {board.map((row, i) => (<GameRow key={i} row={row} putPiece={putPiece} />))}
                         </tbody>
                     </table>
                 </Col>
             </Row>
         </div>
       );
-    }
+}
