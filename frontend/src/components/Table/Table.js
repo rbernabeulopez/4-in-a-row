@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
+import {Col, List, Row} from "antd";
+import GameRow from "../../component/GameRow";
 
 export const Table =() => {
-   /*
-  useEffect(() => {
-        makeSocketConnection(1, 1);
+    useEffect(() => {
+        makeSocketConnection(1, localStorage.getItem('playerId'));
     }, []);
-    */
 
     const [player, setPlayer] = useState(true);
 

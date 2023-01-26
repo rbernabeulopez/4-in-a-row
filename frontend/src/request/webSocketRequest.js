@@ -11,10 +11,21 @@ const handleNotification = (event) => {
     console.log("Received notification", JSON.parse(event.body));
 };
 
+const handlePersonalNotification = (event) => {
+    console.log("Received personal notification", JSON.parse(event.body));
+    const response = JSON.parse(event.body);
+    if(response.httpCode < 400) {
+        infoNotification("Notification", response.message, "topRight");
+    } else {
+        errorNotification("Something went wrong", response.message, "topRight");
+    }
+};
+
 const listenEvents = (gameId) => {
     infoNotification("Connection established", "Connection to server was established.", "topRight")
     if (stompClient) {
-        stompClient.subscribe(`/game-notifications`, handleNotification);
+        stompClient.subscribe(`/game-notifications/${gameId}`, handleNotification);
+        stompClient.subscribe(`/personal-notifications/${userData}`, handlePersonalNotification);
         stompClient.send("/service/v1/join-game", {}, JSON.stringify({playerId: 1, gameId: gameId}));
     }
 }
