@@ -1,5 +1,6 @@
 package contexts.game.domain.entity;
 
+import contexts.exception.domain.PlayerDoesNotBelongGameException;
 import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
 import jakarta.persistence.*;
@@ -28,4 +29,16 @@ public class Game {
     private List<Movement> movements;
 
     private boolean finished;
+
+    private static final int MAX_PLAYERS = 2;
+
+    public void checkPlayerBelongs(Player player) {
+        if(!players.contains(player)) {
+            throw new PlayerDoesNotBelongGameException(this.id);
+        }
+    }
+
+    public Player getStartingPlayer() {
+        return (players.size() == MAX_PLAYERS) ? players.get(0) : null;
+    }
 }

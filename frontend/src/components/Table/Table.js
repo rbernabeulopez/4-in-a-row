@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
+import {Col, List, Row} from "antd";
+import GameRow from "../../component/GameRow";
 
 export const Table =() => {
     useEffect(() => {
-        makeSocketConnection(1, 1);
+        makeSocketConnection(1, localStorage.getItem('playerId'));
     }, []);
 
     const [player, setPlayer] = useState(true);
@@ -74,40 +76,12 @@ export const Table =() => {
     }
 
 
-
- const Row = ({ row }) => {
-    return (
-      <tr>
-        {row.map((cell, i) => <Cell key={i} value={cell} columnIndex={i} />)}
-      </tr>
-    );
-  };
-  
-  const Cell = ({ value, columnIndex }) => {
-    let color = 'white';
-    if (value === 1) {
-      color = 'red';
-    } else if (value === 2) {
-      color = 'yellow';
-    }
-      
-    return (
-      <td>
-        <div className="cell" onClick={() => putPiece(columnIndex)}>
-          <div className={color}></div>
-        </div>
-      </td>
-    );
-  };
-
-
   useEffect(()=> {
     initBoard(data.movements, data.players);
   }, [])
 
   const putPiece = (columnIndex) => {
-    
-  setMovement({...movement, col: columnIndex, player});
+    setMovement({...movement, col: columnIndex, player});
     // send to websocket endpoint
     
   }
@@ -118,19 +92,33 @@ export const Table =() => {
     setData(updateData);
     console.log(updateData);
     initBoard(updateData.movements, updateData.players);
-   
   }
 
     return (
-        <div>
-          
-          <table>
-            <thead>
-            </thead>
-            <tbody>
-            {board.map((row, i) => (<Row key={i} row={row} />))}
-            </tbody>
-          </table>
+        <div style={{padding: '50px'}}>
+            <Row>
+                <h1>Connect 4</h1>
+            </Row>
+            <Row>
+                <Col span={6}>
+                    <List
+                        header={<b>Players</b>}
+                        bordered
+                        style={{ width: 300, marginTop: 20 }}
+                        dataSource={data.players}
+                        renderItem={(item) => { return (<List.Item>{item.player_name}</List.Item>) }}
+                    />
+                </Col>
+                <Col span={18}>
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        {board.map((row, i) => (<GameRow key={i} row={row} putPiece={putPiece} />))}
+                        </tbody>
+                    </table>
+                </Col>
+            </Row>
         </div>
       );
-    }
+}
