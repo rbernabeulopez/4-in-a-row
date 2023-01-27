@@ -35,7 +35,6 @@ const listenEvents = (gameId, playerId) => {
     if (stompClient) {
         stompClient.subscribe(`/game-notifications/${gameId}`, handleNotification);
         stompClient.subscribe(`/personal-notifications/${playerId}`, handlePersonalNotification);
-        
     }
 }
 

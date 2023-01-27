@@ -7,7 +7,10 @@ import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,13 +21,21 @@ public class GameModifier {
 
     private PlayerFinder playerFinder;
 
-    public Player joinGame(long gameId, long playerId) {
-        log.info("Joining game {} with player {}", gameId, playerId);
+    private GameRepository gameRepository;
+
+    private PlayerRepository playerRepository;
+
+    public Pair<Player, Optional<Long>> joinGame(long gameId, String playerName) {
+        log.info("Joining game {} with playerToJoin {}", gameId, playerName);
         Game game = gameFinder.findGame(gameId);
-        Player player = playerFinder.findPlayer(playerId);
+        Player playerToJoin = playerFinder.findByName(playerName);
 
-        game.checkPlayerBelongs(player);
+        game.joinPlayer(playerToJoin);
+        gameRepository.save(game);
+        playerRepository.save(playerToJoin);
 
-        return game.getStartingPlayer();
+        Player startingPlayer = game.getStartingPlayer();
+        Optional<Long> startingPlayerId = Optional.ofNullable(startingPlayer).map(Player::getId);
+        return Pair.of(playerToJoin, startingPlayerId);
     }
 }
