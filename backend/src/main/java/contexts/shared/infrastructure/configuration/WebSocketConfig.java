@@ -9,6 +9,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    //Add the stamp endpoints
+    //Allow the request from every different origin. Enable cross origin resource sharing for the whole website.
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/service/v1").setAllowedOriginPatterns("*").withSockJS();
@@ -16,7 +18,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+        //Declare topic prefixes, give our app a destination prefix in which the user will be sending the data to the server
         registry.setApplicationDestinationPrefixes("/service/v1");
-        registry.enableSimpleBroker("/game-notifications", "/personal-notifications");
+        registry.enableSimpleBroker("/join-game","/game-notifications", "/personal-notifications");
     }
 }
