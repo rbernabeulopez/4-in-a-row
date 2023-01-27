@@ -32,7 +32,7 @@ const App = () => {
             <Route path="/historical">
                 <Route index element={<Historical />}/>
             </Route>
-            <Route path="/table">
+            <Route path="/table/:gameId">
                 <Route index element={<Table/>}/>
             </Route>
             <Route path="*" element={<NotFound/>}/>

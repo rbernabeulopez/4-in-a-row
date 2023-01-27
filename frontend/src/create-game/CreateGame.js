@@ -13,12 +13,7 @@ export const CreateGame = () => {
     event.preventDefault();
     let playerId = localStorage.getItem("playerId");
     let gameId = await createGame(playerId);
-    console.log("esto es gameId: " + gameId);
-    makeSocketConnection(gameId, playerId);
-    navigate("/table");
-
-    // TODO: NAVIGATE TO GAME /: GAMEID
-    // TODO: SUBSCRIBE TO GAME VIA SOCKET
+    navigate(`/table/${gameId}`)
   };
 
   const handleSubmit2 = (event) => {
