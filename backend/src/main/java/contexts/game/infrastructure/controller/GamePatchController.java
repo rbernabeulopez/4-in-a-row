@@ -33,6 +33,8 @@ public class GamePatchController {
     }
 }
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 class GamePatchRequest {

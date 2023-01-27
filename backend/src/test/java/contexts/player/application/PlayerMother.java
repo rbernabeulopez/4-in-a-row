@@ -2,6 +2,8 @@ package contexts.player.application;
 
 import contexts.player.domain.entities.Player;
 
+import java.util.ArrayList;
+
 public class PlayerMother {
     public static Player basicWithoutId() {
         return Player.builder()
@@ -18,6 +20,7 @@ public class PlayerMother {
             .name("Player 1")
             .password("12345678")
             .ipAddress("192.168.30.24")
+            .games(new ArrayList<>())
             .build();
     }
 

@@ -16,14 +16,9 @@ export const CreateGame = () => {
     navigate(`/table/${gameId}`)
   };
 
-  const handleSubmit2 = (event) => {
+  const handleJoinGame = (event) => {
     event.preventDefault();
-    let playerId = localStorage.getItem("playerId");
-    createGame(playerId);
-    navigate("/table");
-
-    // TODO: NAVIGATE TO GAME /: GAMEID
-    // TODO: SUBSCRIBE TO GAME VIA SOCKET
+    navigate("/join-game");
   };
 
   const handleSubmit3 = (event) => {
@@ -47,7 +42,7 @@ export const CreateGame = () => {
       </Row>
       <Row>
         <Col sm={4}>
-          <button class="btn btn-primary mt-5" onClick={handleSubmit2}>
+          <button class="btn btn-primary mt-5" onClick={handleJoinGame}>
             Join Game
           </button>
         </Col>

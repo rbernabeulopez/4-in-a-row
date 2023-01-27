@@ -9,9 +9,11 @@ import contexts.exception.domain.EntityNotFoundException;
 import contexts.exception.domain.GameIsFullException;
 import contexts.exception.domain.PlayerAlreadyBelongsGameException;
 import contexts.game.domain.entity.Game;
+import contexts.game.domain.repository.GameRepository;
 import contexts.player.application.PlayerFinder;
 import contexts.player.application.PlayerMother;
 import contexts.player.domain.entities.Player;
+import contexts.player.domain.repository.PlayerRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,6 +31,12 @@ class GameModifierTest extends UnitTestsBase {
     @Mock
     private PlayerFinder playerFinder;
 
+    @Mock
+    private GameRepository gameRepository;
+
+    @Mock
+    private PlayerRepository playerRepository;
+
     @Test
     void joinGameOK() {
         Game game = GameMother.basicWithId(1L);
@@ -45,6 +53,8 @@ class GameModifierTest extends UnitTestsBase {
 
         verify(gameFinder, times(1)).findGame(game.getId());
         verify(playerFinder, times(1)).findByName(playerToJoin.getName());
+        verify(gameRepository, times(1)).save(any());
+        verify(playerRepository, times(1)).save(any());
     }
 
     @Test
@@ -61,6 +71,8 @@ class GameModifierTest extends UnitTestsBase {
         assertEquals(expectedException.getMessage(), actualException.getMessage());
         verify(gameFinder, times(1)).findGame(game.getId());
         verify(playerFinder, never()).findByName(playerToJoin.getName());
+        verify(gameRepository, never()).save(any());
+        verify(playerRepository, never()).save(any());
     }
 
     @Test
@@ -78,6 +90,8 @@ class GameModifierTest extends UnitTestsBase {
         assertEquals(expectedException.getMessage(), actualException.getMessage());
         verify(gameFinder, times(1)).findGame(game.getId());
         verify(playerFinder, times(1)).findByName(playerToJoin.getName());
+        verify(gameRepository, never()).save(any());
+        verify(playerRepository, never()).save(any());
     }
 
     @Test
@@ -95,6 +109,8 @@ class GameModifierTest extends UnitTestsBase {
         assertEquals(expectedException.getMessage(), actualException.getMessage());
         verify(gameFinder, times(1)).findGame(game.getId());
         verify(playerFinder, times(1)).findByName(playerToJoin.getName());
+        verify(gameRepository, never()).save(any());
+        verify(playerRepository, never()).save(any());
     }
 
     @Test
@@ -112,5 +128,7 @@ class GameModifierTest extends UnitTestsBase {
         assertEquals(expectedException.getMessage(), actualException.getMessage());
         verify(gameFinder, times(1)).findGame(game.getId());
         verify(playerFinder, times(1)).findByName(playerToJoin.getName());
+        verify(gameRepository, never()).save(any());
+        verify(playerRepository, never()).save(any());
     }
 }

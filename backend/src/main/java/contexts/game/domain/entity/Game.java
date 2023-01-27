@@ -42,6 +42,9 @@ public class Game {
             throw new PlayerAlreadyBelongsGameException(this.id);
         }
         players.add(player);
+        List<Game> games = player.getGames();
+        games.add(this);
+        player.setGames(games);
     }
 
     public void checkPlayerBelongs(Player player) {
