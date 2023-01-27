@@ -1,13 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
 import {makeSocketConnection} from "../../request/webSocketRequest";
 import './table.css'
 import {Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
+import { sendEvent } from "../../request/webSocketRequest";
+
+
 
 export const Table =() => {
-    useEffect(() => {
-        makeSocketConnection(1, localStorage.getItem('playerId'));
-    }, []);
+
+
+  const { gameId } = useParams();
+  
+  useEffect(() => {
+    let playerId = localStorage.getItem("playerId")
+    makeSocketConnection(gameId, playerId);
+  }, [])
+  
+  /*
+  const registerPlayer = () => {
+    let Sock = new SockJS('hhtp://locahost:8080/service/v1');
+    stompClient = over(Sock);
+    stompClient.connect({}, onConnected, onError);
+  }
+
+  const onConnected = () => {
+    stompClient.subscribe('/game-notifications/1')
+    console.log("mensaje de vuelta");
+  }
+
+  const onError = (err) => {
+    console.log(err)
+  }
+  */
 
     const [player, setPlayer] = useState(true);
 
@@ -73,6 +99,7 @@ export const Table =() => {
           generatedboard.push(row);
         }
         setBoard(generatedboard);
+        //registerPlayer();
     }
 
 
@@ -80,45 +107,57 @@ export const Table =() => {
     initBoard(data.movements, data.players);
   }, [])
 
-  const putPiece = (columnIndex) => {
-    setMovement({...movement, col: columnIndex, player});
-    // send to websocket endpoint
-    
-  }
 
-  function receiveMovement(movementWS) {
-    // receive call from websocket
+
+  const putPiece = (columnIndex) => {
+    const movementData = {
+      gameId: gameId ,
+      playerId: localStorage.getItem("playerId") ,
+      row: columnIndex ,
+      col: columnIndex ,
+    }
+
+    setMovement({...movement, col: columnIndex, player});
+    sendEvent('/make-movement', movementData );
+  }
+ 
+
+  function receiveMovement() {
+  
+    /*
     const updateData = {...data,movements: [...data.movements, movementWS]};
     setData(updateData);
     console.log(updateData);
     initBoard(updateData.movements, updateData.players);
+    */
+   
   }
 
-    return (
-        <div style={{padding: '50px'}}>
-            <Row>
-                <h1>Connect 4</h1>
-            </Row>
-            <Row>
-                <Col span={6}>
-                    <List
-                        header={<b>Players</b>}
-                        bordered
-                        style={{ width: 300, marginTop: 20 }}
-                        dataSource={data.players}
-                        renderItem={(item) => { return (<List.Item>{item.player_name}</List.Item>) }}
-                    />
-                </Col>
-                <Col span={18}>
-                    <table>
-                        <thead>
-                        </thead>
-                        <tbody>
-                        {board.map((row, i) => (<GameRow key={i} row={row} putPiece={putPiece} />))}
-                        </tbody>
-                    </table>
-                </Col>
-            </Row>
-        </div>
-      );
+  return (
+  <div style={{padding: '50px'}}>
+    <Row>
+       <h1>Connect 4</h1>
+    </Row>
+    <Row>
+      <Col span={6}> 
+      <List header={<b>Players</b>}
+            bordered style={{ width: 300, marginTop: 20 }} dataSource={data.players}
+            renderItem={(item) => { 
+              
+              return (
+              <List.Item>{item.player_name}</List.Item>
+              ) }}/> 
+      </Col> 
+      <Col span={18}> <table> 
+        <thead> 
+        </thead>
+          <tbody>
+               {board.map((row, i) => (
+        <GameRow key={i} row={row} putPiece={putPiece} />))}
+                </tbody> 
+                </table> 
+                </Col> 
+                </Row>
+    </div>
+    )
 }

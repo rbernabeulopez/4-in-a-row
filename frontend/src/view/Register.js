@@ -10,7 +10,7 @@ export const Register = () => {
 
   const handleSubmit = (values) => {
     createPlayer(values.username, values.password)
-        .then(() => navigate('/login'))
+        .then(() => navigate('/'))
         .catch((res) => {
           errorNotification("Register failed", res.response.data.message, "topRight");
         })  }
