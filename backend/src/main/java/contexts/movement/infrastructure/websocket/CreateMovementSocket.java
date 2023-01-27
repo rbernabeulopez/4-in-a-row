@@ -17,6 +17,8 @@ public class CreateMovementSocket {
         //Hay que llamar a una función de servicio que verifique que el movimiento es correcto
         //te calcule si hay un ganador o empate y te devuelva un response.
         // te devolveria un PAIR get first, y PAIR get second para obtener dos datos
+        // y si todo esta ok se guarda en base de datos
+
         CreateMovementResponse response = new CreateMovementResponse(request.getPlayerId(), null, false,
                 request.getRow(), request.getCol());
         simpMessagingTemplate.convertAndSend("/game-notifications/"+ request.getGameId(), response );
