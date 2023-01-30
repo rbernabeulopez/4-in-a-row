@@ -18,4 +18,10 @@ public class MovementFinder {
         return movementRepository.getByGameId(gameId);
     }
 
+    public Movement addMovement(Movement movement){
+        log.info("Saving movement with id {}", movement.getId());
+        return movementRepository.save(movement);
+    };
+
+
 }

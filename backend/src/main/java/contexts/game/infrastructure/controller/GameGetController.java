@@ -36,7 +36,7 @@ public class GameGetController {
         game.getMovements().forEach(movement -> movements.add(
                 GameGetMapper.INSTANCE.movementToMovementResponse(movement)
         ));
-
+    //Obtener datos principales de carga desde este endpoints
         return new GameGetResponse(
                 game.getId(),
                 winner,

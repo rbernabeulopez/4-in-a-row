@@ -5,7 +5,9 @@ import './table.css'
 import {Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
+import { errorNotification } from "../../util/notification";
 
+const i = 0;
 
 
 export const Table =() => {
@@ -110,15 +112,25 @@ export const Table =() => {
 
 
   const putPiece = (columnIndex) => {
-    const movementData = {
-      gameId: gameId ,
-      playerId: localStorage.getItem("playerId") ,
-      row: columnIndex ,
-      col: columnIndex ,
+    let r=5; 
+    for(r; r >= 0; r--){
+      if(board[r][columnIndex] == 0){
+        break;
+      }
+    }
+    if(r < 0){
+      errorNotification("Error puting piece", "Column is full",'topRight');
+      return ;
     }
 
+    const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player_id: parseInt(localStorage.getItem("playerId")) }]};
+    setData(updateData);
+    console.log(r);
+    initBoard(updateData.movements, updateData.players);
+    /*
     setMovement({...movement, col: columnIndex, player});
     sendEvent('/make-movement', movementData );
+      */
   }
  
 
