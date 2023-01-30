@@ -1,9 +1,8 @@
 package contexts.exception.infrastructure;
-
 import contexts.exception.domain.EntityNotFoundException;
 import contexts.exception.domain.InvalidValueException;
-import contexts.exception.domain.MovementException;
 import contexts.exception.domain.PlayerDoesNotBelongGameException;
+import contexts.exception.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,7 +30,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidValueException.class})
+    @ExceptionHandler({InvalidValueException.class, PlayerDoesNotBelongGameException.class, PlayerAlreadyBelongsGameException.class, GameIsFullException.class})
     public CustomError handleBadRequestExceptions(Exception ex) {
         return generateError(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }

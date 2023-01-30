@@ -19,3 +19,14 @@ export function getGameById(gameId){
     console.log(response)
   })
 }
+export function joinGame(gameId) {
+  const response = axios({
+    url: `/api/v1/game/join`,
+    method: "PATCH",
+    data: { gameId },
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem("playerToken")}`,
+    },
+  });
+  return response.then((res) => res.data);
+}
