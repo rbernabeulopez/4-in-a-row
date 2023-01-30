@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import {makeSocketConnection} from "../../request/webSocketRequest";
+import {makeSocketConnection, setMovementEventHandler} from "../../request/webSocketRequest";
 import './table.css'
 import {Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
@@ -39,31 +39,24 @@ export const Table =() => {
 
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
-    const [movementWS, setMovementWS] = useState({
-      row: 3,
-      col: 3, 
-      player_id: 1, 
-    });
-
-
     const [data, setData] = useState({
         players: [{
-            id: 0,
+            id: 1,
             player_name: 'Alex',
         }, {
-            id: 1,
+            id: 2,
             player_name: 'Pablo',
         }],
         movements: [
             {
                 row: 5,
                 col: 0,
-                player_id: 0,
+                player_id: 1,
             },
             {
                 row: 5,
                 col: 1,
-                player_id: 1,
+                player_id: 2,
             }
             
         ],
@@ -100,6 +93,7 @@ export const Table =() => {
 
 
   useEffect(()=> {
+    setMovementEventHandler(receiveMovement);
     initBoard(data.movements, data.players);
   }, [])
 
@@ -124,7 +118,6 @@ export const Table =() => {
 
     const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player_id: parseInt(localStorage.getItem("playerId"))}]};
     setData(updateData);
-    console.log(r);
     initBoard(updateData.movements, updateData.players);
     
     const movement  = {
@@ -139,14 +132,17 @@ export const Table =() => {
   }
  
 
-  function receiveMovement() {
-  
-    const updateData = {...data,movements: [...data.movements, movementWS]};
-    setData(updateData);
-    console.log(updateData);
-    initBoard(updateData.movements, updateData.players);
+  function receiveMovement(movementReceived) {
     
-   
+    if(movementReceived.playerId == localStorage.getItem("playerId")){
+      return;
+    }
+    
+    const updateData = {...data,movements: [...data.movements, {row: movementReceived.row, col: movementReceived.col, player_id: movementReceived.playerId}]};
+    console.log(data.movements)
+    setData(updateData);
+    initBoard(updateData.movements, updateData.players);
+    setIsPlayerTurn(isPlayerTurn);
   }
 
   return (
