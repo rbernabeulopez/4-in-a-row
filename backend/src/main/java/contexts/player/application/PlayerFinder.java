@@ -1,7 +1,10 @@
 package contexts.player.application;
 
 import contexts.exception.domain.EntityNotFoundException;
+import contexts.exception.domain.MovementException;
 import contexts.game.domain.entity.Game;
+import contexts.movement.application.MovementFinder;
+import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
 import contexts.player.domain.repository.PlayerRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.List;
 @Slf4j
 public class PlayerFinder {
     private PlayerRepository playerRepository;
+    private MovementFinder movementFinder;
 
     public Player findPlayer(long id) {
         log.info("Searching player with id {}", id);
@@ -36,4 +40,12 @@ public class PlayerFinder {
         log.info("Searching games of player with id {}", id);
         return findPlayer(id).getGames();
     }
+
+    public void checkPlayerTurn(long gameId, long playerId){
+       Movement lastMovement = movementFinder.findLastMovement(gameId);
+       if(lastMovement != null && lastMovement.getPlayer().getId() == playerId){
+           throw new MovementException("Player not turn");
+       }
+    }
+
 }

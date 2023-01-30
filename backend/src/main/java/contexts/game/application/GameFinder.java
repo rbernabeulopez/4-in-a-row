@@ -24,4 +24,7 @@ public class GameFinder {
                 () -> new EntityNotFoundException("Game with id " + id + " not found")
         );
     }
+
+
+
 }

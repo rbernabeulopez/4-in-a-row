@@ -37,13 +37,7 @@ export const Table =() => {
   }
   */
 
-    const [player, setPlayer] = useState(true);
-
-    const [movement, setMovement] = useState({
-      row: 0,
-      col: 0,
-      player_id: 0,
-    });
+    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
     const [movementWS, setMovementWS] = useState({
       row: 3,
@@ -112,6 +106,11 @@ export const Table =() => {
 
 
   const putPiece = (columnIndex) => {
+    if(!isPlayerTurn){
+      return 
+    }
+
+
     let r=5; 
     for(r; r >= 0; r--){
       if(board[r][columnIndex] == 0){
@@ -123,25 +122,30 @@ export const Table =() => {
       return ;
     }
 
-    const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player_id: parseInt(localStorage.getItem("playerId")) }]};
+    const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player_id: parseInt(localStorage.getItem("playerId"))}]};
     setData(updateData);
     console.log(r);
     initBoard(updateData.movements, updateData.players);
-    /*
-    setMovement({...movement, col: columnIndex, player});
-    sendEvent('/make-movement', movementData );
-      */
+    
+    const movement  = {
+      row: r,
+      col: columnIndex,
+      playerId: localStorage.getItem("playerId"),
+      gameId: gameId
+    };
+
+    sendEvent('/make-movement', movement);
+    setIsPlayerTurn(!isPlayerTurn);  
   }
  
 
   function receiveMovement() {
   
-    /*
     const updateData = {...data,movements: [...data.movements, movementWS]};
     setData(updateData);
     console.log(updateData);
     initBoard(updateData.movements, updateData.players);
-    */
+    
    
   }
 
@@ -165,7 +169,7 @@ export const Table =() => {
         </thead>
           <tbody>
                {board.map((row, i) => (
-        <GameRow key={i} row={row} putPiece={putPiece} />))}
+        <GameRow key={i} row={row} putPiece={putPiece} isPlayerTurn= {isPlayerTurn} />))}
                 </tbody> 
                 </table> 
                 </Col> 
