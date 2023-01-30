@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MovementRepository extends JpaRepository<Movement, Long> {
-    List<Movement> getByGameId(Game game);
+    List<Movement> getByGameId(Long gameId);
 }

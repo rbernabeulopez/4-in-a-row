@@ -16,12 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class GameCreator {
+
     private GameRepository gameRepository;
     private PlayerFinder playerFinder;
     private PlayerCreator playerCreator;
     private PlayerUpdater playerUpdater;
 
     public Game createGame(Long player1Id) {
+
         Player player = playerFinder.findPlayer(player1Id);
         log.info("Creating game for player {}", player);
 

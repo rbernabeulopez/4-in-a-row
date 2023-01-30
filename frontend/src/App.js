@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import { Historical } from "./component/Historical"
 import { CreateGame } from "./create-game/CreateGame";
 import {Table} from "./components/Table/Table";
+import JoinGame from "./view/JoinGame";
 
 
 const Redirect = () => {
@@ -15,24 +16,30 @@ const Redirect = () => {
     []);
 }
 
+
 const App = () => {
+
+   
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Redirect />} />
+            <Route path="/" element={<Redirect/>} />
             <Route path="/register">
                 <Route index element={<Register />} />
+            </Route>
+            <Route path="/login">
+                <Route index element={<Login />} />
             </Route>
             <Route path="/create-game">
                 <Route index element={<CreateGame />} />
             </Route>
-            <Route path="/login">
-                <Route index element={<Login />}/>
+            <Route path="/join-game">
+                <Route index element={<JoinGame />} />
             </Route>
             <Route path="/historical">
                 <Route index element={<Historical />}/>
             </Route>
-            <Route path="/table">
+            <Route path="/table/:gameId">
                 <Route index element={<Table/>}/>
             </Route>
             <Route path="*" element={<NotFound/>}/>

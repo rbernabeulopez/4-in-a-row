@@ -21,10 +21,11 @@ public class GameCreatorTest extends UnitTestsBase {
 
     @Test
     public void shouldCreateGame() {
-        Game gameExpected = GameMother.basicWithId(1L);
+        long playerId = 1L;
+        Game gameExpected = GameMother.basicWithIdAndPlayer(1L, playerId);
 
         when(gameRepository.save(any())).thenReturn(gameExpected);
-        when(playerFinder.findPlayer(1L)).thenReturn(gameExpected.getPlayers().get(0));
+        when(playerFinder.findPlayer(playerId)).thenReturn(gameExpected.getPlayers().get(0));
 
         Game actualGame = assertDoesNotThrow(() -> gameCreator.createGame(gameExpected.getPlayers().get(0).getId()));
 

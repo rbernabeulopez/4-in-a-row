@@ -1,0 +1,96 @@
+body {
+    font-family: 'Lucida Sans Unicode';
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 50px;
+  }
+  
+  table {
+    margin: 0 auto;
+    border-spacing: 0px 0px;
+  }
+  
+  .button {
+    background-color: #303030;
+    color: #50C8FF;
+    height: 30px;
+    width: 100px;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  
+  .button:hover {
+    background-color: #50C8FF;
+    color: #303030;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  
+  .cell {
+    height: 70px;
+    width: 70px;
+    background-color: #1990ff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .circle {
+    height: 15px;
+    width: 15px;
+    border: 1px solid #000;
+    border-radius: 100px;
+  }
+  
+  .circles {
+    margin: -40px 0 25px 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .red-sm {
+    background-color: red;
+  }
+  
+  .yellow-sm {
+    background-color: yellow;
+  }
+  
+  .message {
+    text-align: center;
+    font-size: 17px;
+  }
+  
+  .white {
+    height: 60px;
+    width: 60px;
+    background-color: #FFF;
+    border-radius: 100px;
+  }
+  
+  .red {
+    height: 60px;
+    width: 60px;
+    background-color: red;
+    border-radius: 100px;
+    transition: background-color 0.5s;
+  }
+  
+  .yellow {
+    height: 60px;
+    width: 60px;
+    background-color: yellow;
+    border-radius: 100px;
+    transition: background-color 0.5s;
+  }
