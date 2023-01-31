@@ -7,8 +7,6 @@ import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
 
-const i = 0;
-
 
 export const Table =() => {
 
@@ -20,23 +18,6 @@ export const Table =() => {
     makeSocketConnection(gameId, playerId);
   }, [])
   
-  /*
-  const registerPlayer = () => {
-    let Sock = new SockJS('hhtp://locahost:8080/service/v1');
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
-  }
-
-  const onConnected = () => {
-    stompClient.subscribe('/game-notifications/1')
-    console.log("mensaje de vuelta");
-  }
-
-  const onError = (err) => {
-    console.log(err)
-  }
-  */
-
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
     const [data, setData] = useState({
@@ -47,19 +28,9 @@ export const Table =() => {
             id: 2,
             player_name: 'Pablo',
         }],
-        movements: [
-            {
-                row: 5,
-                col: 0,
-                player_id: 1,
-            },
-            {
-                row: 5,
-                col: 1,
-                player_id: 2,
-            }
-            
-        ],
+        movements: [{
+           
+          }],
         winner: null,
         finished: false
     })
@@ -88,7 +59,6 @@ export const Table =() => {
           generatedboard.push(row);
         }
         setBoard(generatedboard);
-        //registerPlayer();
     }
 
 
@@ -100,11 +70,10 @@ export const Table =() => {
 
 
   const putPiece = (columnIndex) => {
+    console.log(isPlayerTurn)
     if(!isPlayerTurn){
       return 
     }
-
-
     let r=5; 
     for(r; r >= 0; r--){
       if(board[r][columnIndex] == 0){
@@ -126,23 +95,25 @@ export const Table =() => {
       playerId: localStorage.getItem("playerId"),
       gameId: gameId
     };
-
+    setIsPlayerTurn(false);
+    console.log(isPlayerTurn);
     sendEvent('/make-movement', movement);
-    setIsPlayerTurn(!isPlayerTurn);  
+    console.log(isPlayerTurn);
   }
  
 
   function receiveMovement(movementReceived) {
     
-    if(movementReceived.playerId == localStorage.getItem("playerId")){
-      return;
-    }
-    
-    const updateData = {...data,movements: [...data.movements, {row: movementReceived.row, col: movementReceived.col, player_id: movementReceived.playerId}]};
-    console.log(data.movements)
-    setData(updateData);
-    initBoard(updateData.movements, updateData.players);
-    setIsPlayerTurn(isPlayerTurn);
+   // if(movementReceived.playerId == localStorage.getItem("playerId")){
+   //   return;
+  //  }
+
+  //  const updateData = {...data,movements: [...data.movements, {row: movementReceived.row, col: movementReceived.col, player_id: movementReceived.playerId}]};
+    data.movements.push({row: movementReceived.row, col: movementReceived.col, player_id: movementReceived.playerId});
+    initBoard(data.movements, data.players);
+    console.log("paso por aqui")
+    setIsPlayerTurn(false);
+    console.log(isPlayerTurn);
   }
 
   return (
