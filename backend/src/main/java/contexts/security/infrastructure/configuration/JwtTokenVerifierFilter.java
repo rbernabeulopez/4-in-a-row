@@ -3,6 +3,8 @@ package contexts.security.infrastructure.configuration;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import contexts.exception.domain.InvalidCredentialsException;
 import contexts.security.domain.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ import java.io.IOException;
 public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 
     private final String secretJwtKey;
+    private final ObjectMapper objectMapper;
 
     private void callBackend(HttpServletRequest request,
             HttpServletResponse response,
@@ -29,6 +33,13 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleLoginError(HttpServletResponse response) throws IOException {
+        InvalidCredentialsException errorResponse = new InvalidCredentialsException();
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
 
     @Override
@@ -58,7 +69,8 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 
             callBackend(request, response, filterChain);
         } catch (Exception e) {
-            throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
+            handleLoginError(response);
+            return;
         }
     }
 }
