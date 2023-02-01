@@ -139,7 +139,6 @@ export const Table =() => {
                     </table>
                     </Col>
                     </Row>
-          <button onClick={() => console.log(data)}>PULSAME</button>
         </div>
     )
 }
