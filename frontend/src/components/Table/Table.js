@@ -6,23 +6,28 @@ import {Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
+import { getGameById } from "../../request/gameRequest";
 
 
 export const Table =() => {
 
 
   const { gameId } = useParams();
-  
+
   useEffect(() => {
     let playerId = localStorage.getItem("playerId")
     makeSocketConnection(gameId, playerId);
   }, [])
-  
+
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
     const [data, setData] = useState({})
 
     const [board, setBoard] = useState([]);
+
+    const [game, setGame] = useState();
+
+    const oneGame = getGameById(gameId);
 
     // Starts new game
     const initBoard= (movements =  [], players) => {
@@ -49,23 +54,24 @@ export const Table =() => {
 
 
   useEffect(()=> {
+    const getGame = async(gameId) => {
+      let newGame = await getGameById(gameId);
+      console.log(newGame)
+      setGame(newGame);
+    }
+    getGame(gameId);
+    console.log(game);
     setData({
-      players: [{
-          id: 1,
-          player_name: 'Alex',
-      }, {
-          id: 153,
-          player_name: 'Pablo',
-      }],
-      movements: [],
-      winner: null,
-      finished: false
+    //  players: [initialGame.players],
+   //   movements: [initialGame.movements],
+   //   winner: initialGame.winner,
+   //   finished: initialGame.finished
     })
     setMovementEventHandler(receiveMovement);
     initBoard(data.movements, data.players);
   }, [])
 
-
+ 
 
   const putPiece = (columnIndex) => {
     console.log(isPlayerTurn)
