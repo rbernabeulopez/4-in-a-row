@@ -19,15 +19,11 @@ export const Table =() => {
     makeSocketConnection(gameId, playerId);
   }, [])
 
-    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+    const [isPlayerTurn, setIsPlayerTurn] = useState(false);
 
     const [data, setData] = useState({})
 
     const [board, setBoard] = useState([]);
-
-    const [game, setGame] = useState();
-
-    const oneGame = getGameById(gameId);
 
     // Starts new game
     const initBoard= (movements =  [], players) => {
@@ -39,9 +35,9 @@ export const Table =() => {
             const movement = movements.find((movement) => movement.row === r && movement.col === c);
             if(movement == null){
                 row.push(0);
-            } else if(movement.player_id === players[0].id){
+            } else if(movement.player.id === players[0].id){
                 row.push(1);
-            } else if(movement.player_id === players[1].id){
+            } else if(movement.player.id === players[1].id){
                 row.push(2);
             } else {
                 row.push(0);
@@ -53,22 +49,21 @@ export const Table =() => {
     }
 
 
-  useEffect(()=> {
-    const getGame = async(gameId) => {
-      let newGame = await getGameById(gameId);
-      console.log(newGame)
-      setGame(newGame);
-    }
-    getGame(gameId);
-    console.log(game);
+  useEffect(async ()=> {
+
+    const game = await getGameById(gameId);
+    console.log(game)
+    // En caso de que no haya movimientos, comprobar si eres el primer player 
+    // en caso de haber movimientos, comprobar que el ultimo movimiento no es tuyo
+    // en cualquiera de los dos casos, setear a true 
     setData({
-    //  players: [initialGame.players],
-   //   movements: [initialGame.movements],
-   //   winner: initialGame.winner,
-   //   finished: initialGame.finished
+      players: game.players,
+      movements: game.movements,
+      winner: game.winner,
+      finished: game.finished
     })
     setMovementEventHandler(receiveMovement);
-    initBoard(data.movements, data.players);
+    initBoard(game.movements, game.players);
   }, [])
 
  
@@ -89,10 +84,9 @@ export const Table =() => {
       return ;
     }
 
-    const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player_id: parseInt(localStorage.getItem("playerId"))}]};
+    const updateData = {...data, movements: [...data.movements, {row: r, col: columnIndex, player:{ id :parseInt(localStorage.getItem("playerId"))}}]};
     setData(updateData);
     initBoard(updateData.movements, updateData.players);
-    console.log("data after put", updateData)
     
     const movement  = {
       row: r,
@@ -110,7 +104,7 @@ export const Table =() => {
     return;
   }
       setData(prevState => {
-          const updateData = {...prevState,movements: [...prevState.movements, {row: movementReceived.row, col: movementReceived.col, player_id: movementReceived.playerId}]};
+          const updateData = {...prevState,movements: [...prevState.movements, {row: movementReceived.row, col: movementReceived.col, player:{ id: movementReceived.playerId}}]};
           initBoard(updateData.movements, updateData.players);
           setIsPlayerTurn(true);
             return updateData;
@@ -132,7 +126,7 @@ export const Table =() => {
                 renderItem={(item) => {
 
                   return (
-                  <List.Item>{item.player_name}</List.Item>
+                  <List.Item>{item.name}</List.Item>
                   ) }}/>
           </Col>
           <Col span={18}> <table>
