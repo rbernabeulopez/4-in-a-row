@@ -19,7 +19,6 @@ export const sendEvent = (endPoint, data) => {
 
 const handleNotification = (event) => {
     movementEventHandler(JSON.parse(event.body));
-    console.log("Received notification", JSON.parse(event.body));
 };
 
 const handlePersonalNotification = (event) => {
