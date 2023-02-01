@@ -6,6 +6,7 @@ import {Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
+import { getGameById } from "../../request/gameRequest";
 
 
 export const Table =() => {

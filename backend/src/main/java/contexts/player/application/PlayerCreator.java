@@ -1,5 +1,6 @@
 package contexts.player.application;
 
+import contexts.exception.domain.EntityNotFoundException;
 import contexts.exception.domain.InvalidValueException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,13 @@ public class PlayerCreator {
             throw new InvalidValueException("Player name cannot be null");
         }
 
+
+        if(playerRepository.existsByName(name)){
+            throw new InvalidValueException("The player has already created");
+        }
+
         if (password.length() < 4 || password.length() > 20) {
-            throw new InvalidValueException("Password must be between 8 and 20 characters");
+            throw new InvalidValueException("Password must be between 4 and 20 characters");
         }
 
         if (!isValidIp(ipAddress)) {
