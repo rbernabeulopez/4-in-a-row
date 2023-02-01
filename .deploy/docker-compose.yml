@@ -31,6 +31,8 @@ services:
     image: rbernabeulopez/frontend
     ports:
       - "3000:3000"
+    environment:
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
     networks:
       - application
 
