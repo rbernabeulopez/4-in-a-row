@@ -12,27 +12,29 @@ const JoinGame = () => {
         joinGame(values.gameId).then(() => {
             navigate(`/table/${values.gameId}`);
         }).catch((error) => {
-            console.log(error, "?");
-            errorNotification("Error joining game", error.response.data.message, "topRight");
+            const message = error.response?.data?.message || "Something went wrong";
+            errorNotification("Error joining game", message, "topRight");
         });
 
     };
 
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <h1>Join Game</h1>
-            <Card style={{ width: 300 }}>
-                <Form onFinish={handleJoinGame}>
-                    <Form.Item label="Game ID" name="gameId">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Join Game
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Card>
+            <div className={"pt-5"}>
+                <h1>Join Game</h1>
+                <Card style={{ width: 300, marginTop: 16 }}>
+                    <Form onFinish={handleJoinGame}>
+                        <Form.Item label="Game ID" name="gameId">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Join Game
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </div>
         </div>
     )
 }

@@ -32,4 +32,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public CustomError handleBadRequestExceptions(Exception ex) {
         return generateError(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public CustomError handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        return generateError(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }
