@@ -4,11 +4,10 @@ import SockJS from 'sockjs-client';
 
 let stompClient = null;
 
-let eventHandlers = [];
+let movementEventHandler = undefined;
 
 export const sendEvent = (endPoint, data) => {
     if (stompClient) {
-        console.log("Segundo paso")
         stompClient.send(`/service/v1/${endPoint}`, {}, JSON.stringify(
             data
         )
@@ -16,8 +15,10 @@ export const sendEvent = (endPoint, data) => {
     }
 }
 
+
+
 const handleNotification = (event) => {
-    console.log("Received notification", JSON.parse(event.body));
+    movementEventHandler(JSON.parse(event.body));
 };
 
 const handlePersonalNotification = (event) => {
@@ -49,4 +50,8 @@ export const makeSocketConnection = (gameId, playerId) => {
     stompClient = over(Sock);
     stompClient.debug = null
     stompClient.connect({}, () => handleConnection(gameId, playerId), handleConnectionError);
+}
+
+export const setMovementEventHandler = (eventHandler) =>  {
+    movementEventHandler = eventHandler;
 }

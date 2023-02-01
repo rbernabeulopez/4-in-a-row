@@ -1,6 +1,6 @@
 import React from "react";
 
-const GameCell = ({ value, columnIndex, putPiece }) => {
+const GameCell = ({ value, columnIndex, putPiece, isPlayerTurn }) => {
     let color = 'white';
     if (value === 1) {
         color = 'red';
@@ -9,7 +9,7 @@ const GameCell = ({ value, columnIndex, putPiece }) => {
     }
     return (
         <td>
-            <div className="cell" onClick={() => putPiece(columnIndex)}>
+            <div className="cell" onClick={() => putPiece(columnIndex)} style={{cursor: isPlayerTurn ? "pointer": undefined}}>
                 <div className={color}></div>
             </div>
         </td>
