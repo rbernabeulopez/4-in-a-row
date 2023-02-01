@@ -7,13 +7,13 @@ WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
+# add app
+COPY . ./
+
 # install app dependencies
 COPY package-production.json ./package.json
 COPY package-lock.json ./
 RUN npm install --silent
-
-# add app
-COPY . ./
 
 # expose port
 EXPOSE 3000
