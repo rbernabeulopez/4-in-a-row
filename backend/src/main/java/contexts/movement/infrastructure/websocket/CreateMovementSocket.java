@@ -15,11 +15,10 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
-import static java.time.LocalTime.now;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @RestController
 @AllArgsConstructor
@@ -58,6 +57,7 @@ public class CreateMovementSocket {
 
     }
 }
+
 
 @Getter
 @Setter
