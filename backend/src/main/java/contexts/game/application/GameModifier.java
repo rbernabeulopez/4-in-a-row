@@ -42,5 +42,6 @@ public class GameModifier {
     public void setWinner(Game game, Player winner) {
         game.setWinner(!winner.equals(new Player()) ? winner : null);
         game.setFinished(true);
+        gameRepository.save(game);
     }
 }
