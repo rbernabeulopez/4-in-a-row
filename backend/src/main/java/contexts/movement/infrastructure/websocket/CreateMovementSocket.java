@@ -50,7 +50,7 @@ public class CreateMovementSocket {
             Player winner = movementCreator.addMovement(movement);
             CreateMovementResponse response = new CreateMovementResponse(
                 request.getPlayerId(),
-                winner != null ? winner.getId() : null,
+                (winner != null && !winner.equals(new Player())) ? winner.getId() : null,
                 winner != null,
                 request.getRow(),
                 request.getCol()

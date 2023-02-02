@@ -58,20 +58,19 @@ public class Game {
         return (players.size() == MAX_PLAYERS) ? players.get(0) : null;
     }
 
-    public Player checkWinner(Movement createdMovement) {
-        List<Movement> gameMovements = this.movements;
-        gameMovements.add(createdMovement);
-
-        if (gameMovements.size() == 42) {
+    public Player checkWinner() {
+        if (this.movements.size() == 42) {
             return new Player();
         }
 
         Player[][] board = new Player[6][7];
-        for (Movement movement : gameMovements) {
+        for (Movement movement : this.movements) {
             board[movement.getRow()][movement.getCol()] = movement.getPlayer();
         }
 
         // Verificar filas
+        // i = fila = 5
+        // j = columna = 0
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
                 if (board[i][j] != null &&

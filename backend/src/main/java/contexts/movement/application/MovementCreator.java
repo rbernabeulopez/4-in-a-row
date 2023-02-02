@@ -1,6 +1,9 @@
 package contexts.movement.application;
 
 import contexts.exception.domain.MovementException;
+import contexts.game.application.GameCreator;
+import contexts.game.application.GameFinder;
+import contexts.game.application.GameModifier;
 import contexts.game.domain.entity.Game;
 import contexts.movement.domain.entity.Movement;
 import contexts.movement.domain.repository.MovementRepository;
@@ -21,6 +24,10 @@ public class MovementCreator {
     private PlayerFinder playerFinder;
     private MovementRepository movementRepository;
 
+    private GameFinder gameFinder;
+
+    private GameModifier gameModifier;
+
     private MovementFinder movementFinder;
 
     public Player addMovement(Movement movement){
@@ -28,9 +35,14 @@ public class MovementCreator {
         List<Movement> listMovements = movementFinder.findMovementByGameIdAndColumn(movement.getGame().getId(), movement.getCol());
         checkMovement(listMovements, movement);
         playerFinder.checkPlayerTurn(movement.getGame().getId(), movement.getPlayer().getId());
-        Movement createdMovement = movementRepository.save(movement);
-        return createdMovement.getGame().checkWinner(createdMovement);
-    };
+        movementRepository.save(movement);
+        Game game = gameFinder.findGame(movement.getGame().getId());
+        Player winner = game.checkWinner();
+        if(winner != null){
+            gameModifier.setWinner(game, winner);
+        }
+        return winner;
+    }
 
     private void checkMovement(List<Movement> listMovements, Movement movement){
         for(int row = 5; row >= 0; row--){
