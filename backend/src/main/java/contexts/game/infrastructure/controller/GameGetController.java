@@ -69,6 +69,7 @@ class MovementResponse {
     private long id;
     private int row;
     private int col;
+    private PlayerResponse player;
 }
 
 @Mapper
