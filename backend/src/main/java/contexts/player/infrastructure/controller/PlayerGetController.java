@@ -5,6 +5,8 @@ import contexts.player.application.PlayerFinder;
 import contexts.player.domain.entities.Player;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,14 @@ public class PlayerGetController {
 
         return response;
     }
+
+    @GetMapping("/{playerId}")
+    public PlayerResponse getInfoPlayer(@PathVariable long playerId){
+        Player player = playerFinder.findPlayer(playerId);
+        PlayerResponse playerDto = PlayerGetMapper.INSTANCE.playerToPlayerResponse(player);
+        return playerDto;
+
+    }
 }
 
 @Data
@@ -59,4 +69,11 @@ class PlayerHistoryGameResponse {
 class PlayerResponse {
     private long id;
     private String name;
+}
+
+@Mapper
+interface PlayerGetMapper {
+    PlayerGetMapper INSTANCE = Mappers.getMapper(PlayerGetMapper.class);
+
+    PlayerResponse playerToPlayerResponse(Player player);
 }

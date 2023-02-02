@@ -21,3 +21,12 @@ export async function loginPlayer(name, password){
             localStorage.setItem("playerToken", res.headers.authorization);
         })
 }
+
+export function getPlayer(playerId){
+    const response = axios({
+        url:`/api/v1/player/${playerId}`,
+        method:"GET",
+    }).then(function (response) {
+        return response.data;
+     })
+}
