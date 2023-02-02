@@ -114,9 +114,13 @@ export const Table =() => {
  
 
   const receiveMovement = (movementReceived) => {
+      if(movementReceived.gameFinished) {
+        setIsPlayerTurn(false);
+      }
   if(movementReceived.playerId == localStorage.getItem("playerId")){
     return;
   }
+  console.log(movementReceived)
       setData(prevState => {
           const updateData = {...prevState,movements: [...prevState.movements, {row: movementReceived.row, col: movementReceived.col, player:{ id: movementReceived.playerId}}]};
           initBoard(updateData.movements, updateData.players);

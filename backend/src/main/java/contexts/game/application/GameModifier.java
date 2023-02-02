@@ -38,4 +38,9 @@ public class GameModifier {
         Optional<Long> startingPlayerId = Optional.ofNullable(startingPlayer).map(Player::getId);
         return Pair.of(playerToJoin, startingPlayerId);
     }
+
+    public void setWinner(Game game, Player winner) {
+        game.setWinner(!winner.equals(new Player()) ? winner : null);
+        game.setFinished(true);
+    }
 }
