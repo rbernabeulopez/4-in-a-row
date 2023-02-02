@@ -32,6 +32,8 @@ export const Table =() => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [showWin, setShowWin] = useState(false);
+
     // Starts new game
     const initBoard= (movements =  [], players) => {
         // Create a blank 6x7 matrix
@@ -61,11 +63,17 @@ export const Table =() => {
 
     const game = await getGameById(gameId);
 
-    if(game.movements.length == 0 && game.players[0].id == localStorage.getItem("playerId")){
-      setIsPlayerTurn(true);
-    } else if(game.movements.length > 0 && game.movements.at(-1).player.id != localStorage.getItem("playerId")){
-      setIsPlayerTurn(true);
+    if(!game.finished){
+      if(game.movements.length == 0 && game.players[0].id == localStorage.getItem("playerId")){
+        setIsPlayerTurn(true);
+      } else if(game.movements.length > 0 && game.movements.at(-1).player.id != localStorage.getItem("playerId")){
+        setIsPlayerTurn(true);
+      }
+    }else {
+      setShowWin(true);
     }
+
+  
 
     setData({
       players: game.players,
@@ -83,7 +91,7 @@ export const Table =() => {
  
 
   const putPiece = (columnIndex) => {
-    console.log(isPlayerTurn)
+    console.log(isPlayerTurn + " turno del jugador")
     if(!isPlayerTurn){
       return 
     }
@@ -114,8 +122,10 @@ export const Table =() => {
  
 
   const receiveMovement = (movementReceived) => {
+    console.log(movementReceived.gameFinished + " esto es si ha acabado la partida");
       if(movementReceived.gameFinished) {
         setIsPlayerTurn(false);
+        setShowWin(true);
       }
   if(movementReceived.playerId == localStorage.getItem("playerId")){
     return;
@@ -147,6 +157,15 @@ export const Table =() => {
         </Modal.Body>
       </Modal>
 
+      <Modal show={showWin}>
+        <Modal.Header style={{justifyContent: "center"}} >
+          <h1> !You win!</h1>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>Crack,genio,titán,figura,mastodonte,vivaldi de los vivaldi.</h3>
+        </Modal.Body>
+      </Modal>
+
 
         <Row>
            <h1>Connect 4</h1>
@@ -172,7 +191,7 @@ export const Table =() => {
                     </Col>
                     </Row>
           <Row>
-           {isPlayerTurn && <Turn/>}
+           {isPlayerTurn && <Turn isPlayerTurn={isPlayerTurn}/>}
         </Row>
         </div>
     )

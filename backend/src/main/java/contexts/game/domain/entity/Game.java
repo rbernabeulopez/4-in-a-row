@@ -77,7 +77,7 @@ public class Game {
                     board[i][j] == board[i][j + 1] &&
                     board[i][j] == board[i][j + 2] &&
                     board[i][j] == board[i][j + 3]) {
-                    return board[i][j];
+                    return board[i][j] ;
                 }
             }
         }
