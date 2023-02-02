@@ -2,7 +2,7 @@ import React, { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {makeSocketConnection, setMovementEventHandler} from "../../request/webSocketRequest";
 import './table.css'
-import {Col, List, Row} from "antd";
+import {Button, Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
@@ -52,10 +52,13 @@ export const Table =() => {
   useEffect(async ()=> {
 
     const game = await getGameById(gameId);
-    console.log(game)
-    // En caso de que no haya movimientos, comprobar si eres el primer player 
-    // en caso de haber movimientos, comprobar que el ultimo movimiento no es tuyo
-    // en cualquiera de los dos casos, setear a true 
+   
+    if(game.movements.length == 0 && game.players[0].id == localStorage.getItem("playerId")){
+      setIsPlayerTurn(true);
+    } else if(game.movements.length > 0 && game.movements.at(-1).player.id != localStorage.getItem("playerId")){
+      setIsPlayerTurn(true);
+    } 
+
     setData({
       players: game.players,
       movements: game.movements,
@@ -69,7 +72,6 @@ export const Table =() => {
  
 
   const putPiece = (columnIndex) => {
-    console.log(isPlayerTurn)
     if(!isPlayerTurn){
       return 
     }
@@ -139,7 +141,6 @@ export const Table =() => {
                     </table>
                     </Col>
                     </Row>
-          <button onClick={() => console.log(data)}>PULSAME</button>
         </div>
     )
 }
