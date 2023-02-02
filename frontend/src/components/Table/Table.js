@@ -2,12 +2,13 @@ import React, { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {makeSocketConnection, setMovementEventHandler} from "../../request/webSocketRequest";
 import './table.css'
-import {Col, List, Row} from "antd";
+import {Button, Col, List, Row} from "antd";
 import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
 import { getGameById } from "../../request/gameRequest";
-
+import Turn from "../../component/Turn";
+import Modal from 'react-bootstrap/Modal';
 
 export const Table =() => {
 
@@ -24,6 +25,11 @@ export const Table =() => {
     const [data, setData] = useState({})
 
     const [board, setBoard] = useState([]);
+
+    const [show, setShow] = useState(true);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     // Starts new game
     const initBoard= (movements =  [], players) => {
@@ -46,11 +52,11 @@ export const Table =() => {
           generatedboard.push(row);
         }
         setBoard(generatedboard);
+        
     }
 
 
   useEffect(async ()=> {
-
     const game = await getGameById(gameId);
     console.log(game)
     // En caso de que no haya movimientos, comprobar si eres el primer player 
@@ -64,6 +70,9 @@ export const Table =() => {
     })
     setMovementEventHandler(receiveMovement);
     initBoard(game.movements, game.players);
+    if(game.players.length == 2){
+      handleClose();
+    }
   }, [])
 
  
@@ -114,8 +123,20 @@ export const Table =() => {
     if(data === {}){
         return <div>loading</div>
     }
+
     return (
-        <div style={{padding: '50px'}}>
+      <div style={{padding: '50px'}}>
+
+      <Modal show={show}>
+        <Modal.Header closeButton>
+          <Modal.Title>Waiting for another player</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Waiting for battle with other person. Dont worry
+        ¡ You will detroy it!
+        </Modal.Body>
+      </Modal>
+
+
         <Row>
            <h1>Connect 4</h1>
         </Row>
@@ -124,7 +145,6 @@ export const Table =() => {
           <List header={<b>Players</b>}
                 bordered style={{ width: 300, marginTop: 20 }} dataSource={data.players}
                 renderItem={(item) => {
-
                   return (
                   <List.Item>{item.name}</List.Item>
                   ) }}/>
@@ -139,7 +159,9 @@ export const Table =() => {
                     </table>
                     </Col>
                     </Row>
-          <button onClick={() => console.log(data)}>PULSAME</button>
+          <Row>
+           {isPlayerTurn && <Turn/>} 
+        </Row>
         </div>
     )
 }
