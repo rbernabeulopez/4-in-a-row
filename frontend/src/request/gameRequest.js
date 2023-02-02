@@ -15,9 +15,8 @@ export function getGameById(gameId){
       url: `/api/v1/game/${gameId}`,
       method: "GET",
     }
-  ).then(function (response)  {
-    console.log(response)
-  })
+  );
+  return response.then((res) => res.data);
 }
 export function joinGame(gameId) {
   const response = axios({
