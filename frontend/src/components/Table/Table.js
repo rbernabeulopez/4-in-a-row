@@ -133,8 +133,8 @@ export const Table =() => {
       <div style={{padding: '50px'}}>
 
       <Modal show={show}>
-        <Modal.Header className="text-center">
-          <h3 style={{color: "blue"}}> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Waiting other player</h3>
+        <Modal.Header style={{justifyContent: "center"}} >
+          <h3 style={{color: "blue"}}> Waiting other player</h3>
         </Modal.Header>
         <Modal.Body>
         <Spin size="large"> <div className="content"/> 
