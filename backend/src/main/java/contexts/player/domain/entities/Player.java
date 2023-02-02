@@ -26,8 +26,10 @@ public class Player {
     private String ipAddress;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
     private List<Game> games;
 
     @OneToMany(mappedBy = "winner", fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
     private List<Game> wonGames;
 }

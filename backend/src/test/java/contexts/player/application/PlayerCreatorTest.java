@@ -74,7 +74,7 @@ class PlayerCreatorTest extends UnitTestsBase {
             );
         });
 
-        assertEquals("Password must be between 8 and 20 characters", exception.getMessage());
+        assertEquals("Password must be between 4 and 20 characters", exception.getMessage());
         verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }
@@ -91,7 +91,7 @@ class PlayerCreatorTest extends UnitTestsBase {
             );
         });
 
-        assertEquals("Password must be between 8 and 20 characters", exception.getMessage());
+        assertEquals("Password must be between 4 and 20 characters", exception.getMessage());
         verify(passwordEncoder, never()).encode(anyString());
         verify(playerRepository, never()).save(player);
     }

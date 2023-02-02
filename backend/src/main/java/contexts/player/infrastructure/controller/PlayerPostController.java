@@ -19,7 +19,7 @@ public class PlayerPostController {
     private HttpServletRequest httpServletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
-     @PostMapping("player")
+    @PostMapping("player")
     public PlayerPostResponse registerPlayer(@RequestBody PlayerPostRequest playerPostRequest) {
         Player player = playerCreator.createPlayer(
              playerPostRequest.getName(),

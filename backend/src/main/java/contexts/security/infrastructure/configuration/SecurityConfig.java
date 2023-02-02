@@ -1,5 +1,6 @@
 package contexts.security.infrastructure.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import contexts.security.application.UserFinder;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,12 +20,16 @@ public class SecurityConfig {
 
     private UserFinder userAppService;
     private final JwtConfig jwtConfig;
+    private final ObjectMapper objectMapper;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .userDetailsService(this.userAppService)
                 .addFilterAfter(jwtTokenVerifierFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
@@ -54,6 +59,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtTokenVerifierFilter jwtTokenVerifierFilter() {
-        return new JwtTokenVerifierFilter(this.jwtConfig.getKey());
+        return new JwtTokenVerifierFilter(this.jwtConfig.getKey(), this.objectMapper);
     }
 }

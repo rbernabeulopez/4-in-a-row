@@ -1,6 +1,9 @@
 package contexts.game.application;
 
+import contexts.exception.domain.EntityNotFoundException;
 import contexts.game.domain.entity.Game;
+import contexts.game.domain.repository.GameRepository;
+import contexts.game.domain.repository.GameRepository;
 import contexts.player.application.PlayerFinder;
 import contexts.player.domain.entities.Player;
 import lombok.AllArgsConstructor;
@@ -13,12 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class GameFinder {
+    private GameRepository gameRepository;
 
-    private PlayerFinder playerFinder;
-
-    public List<Game> findPlayerGames(long id) {
-        log.info("Searching player with id {}", id);
-        Player player = playerFinder.findPlayer(id);
-        return player.getGames();
+    public Game findGame(long id) {
+        log.info("Searching game with id {}", id);
+        return gameRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Game with id " + id + " not found")
+        );
     }
+
+
+
 }
