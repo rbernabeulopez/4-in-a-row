@@ -9,6 +9,7 @@ import { errorNotification } from "../../util/notification";
 import { getGameById } from "../../request/gameRequest";
 import Turn from "../../component/Turn";
 import Modal from 'react-bootstrap/Modal';
+import { Spin } from 'antd';
 
 export const Table =() => {
 
@@ -132,11 +133,13 @@ export const Table =() => {
       <div style={{padding: '50px'}}>
 
       <Modal show={show}>
-        <Modal.Header closeButton>
-          <Modal.Title>Waiting for another player</Modal.Title>
+        <Modal.Header className="text-center">
+          <h3 style={{color: "blue"}}> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Waiting other player</h3>
         </Modal.Header>
-        <Modal.Body>Waiting for battle with other person. Dont worry
-        ¡ You will detroy it!
+        <Modal.Body>
+        <Spin size="large"> <div className="content"/> 
+        </Spin>
+        <br/>
         </Modal.Body>
       </Modal>
 
