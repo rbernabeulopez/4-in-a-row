@@ -7,6 +7,7 @@ import contexts.movement.domain.entity.Movement;
 import contexts.player.domain.entities.Player;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.util.Pair;
 
 import java.util.List;
 
@@ -55,5 +56,68 @@ public class Game {
 
     public Player getStartingPlayer() {
         return (players.size() == MAX_PLAYERS) ? players.get(0) : null;
+    }
+
+    public Player checkWinner(Movement createdMovement) {
+        List<Movement> gameMovements = this.movements;
+        gameMovements.add(createdMovement);
+
+        if (gameMovements.size() == 42) {
+            return new Player();
+        }
+
+        Player[][] board = new Player[6][7];
+        for (Movement movement : gameMovements) {
+            board[movement.getRow()][movement.getCol()] = movement.getPlayer();
+        }
+
+        // Verificar filas
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] != null &&
+                    board[i][j] == board[i][j + 1] &&
+                    board[i][j] == board[i][j + 2] &&
+                    board[i][j] == board[i][j + 3]) {
+                    return board[i][j];
+                }
+            }
+        }
+
+        // Verificar columnas
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (board[i][j] != null &&
+                    board[i][j] == board[i + 1][j] &&
+                    board[i][j] == board[i + 2][j] &&
+                    board[i][j] == board[i + 3][j]) {
+                    return board[i][j];
+                }
+            }
+        }
+
+        // Verificar diagonales hacia la derecha
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] != null &&
+                    board[i][j] == board[i + 1][j + 1] &&
+                    board[i][j] == board[i + 2][j + 2] &&
+                    board[i][j] == board[i + 3][j + 3]) {
+                    return board[i][j];
+                }
+            }
+        }
+
+        // Verificar diagonales hacia la izquierda
+        for (int i = 0; i < 3; i++) {
+            for (int j = 6; j >= 3; j--) {
+                if (board[i][j] != null &&
+                    board[i][j] == board[i + 1][j - 1] &&
+                    board[i][j] == board[i + 2][j - 2] &&
+                    board[i][j] == board[i + 3][j - 3]) {
+                    return board[i][j];
+                }
+            }
+        }
+        return null;
     }
 }

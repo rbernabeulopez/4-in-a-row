@@ -9,6 +9,7 @@ import contexts.movement.domain.entity.Movement;
 import contexts.player.application.PlayerFinder;
 import contexts.player.domain.entities.Player;
 import lombok.*;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -47,9 +48,14 @@ public class CreateMovementSocket {
                 .createdAt(LocalDateTime.now())
                         .build();
         try {
-            movementCreator.addMovement(movement);
-            CreateMovementResponse response = new CreateMovementResponse(request.getPlayerId(), null, false,
-                    request.getRow(), request.getCol());
+            Player winner = movementCreator.addMovement(movement);
+            CreateMovementResponse response = new CreateMovementResponse(
+                request.getPlayerId(),
+                winner != null ? winner.getId() : null,
+                winner != null,
+                request.getRow(),
+                request.getCol()
+            );
             simpMessagingTemplate.convertAndSend("/game-notifications/"+ request.getGameId(), response );
         } catch (Exception e){
             CustomError error = new CustomError(e.getMessage(), HttpStatus.BAD_REQUEST.value(), LocalDateTime.now());
