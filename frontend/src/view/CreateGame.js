@@ -32,7 +32,7 @@ export const CreateGame = () => {
     {
       title: "Create Game",
       description: "Start a new session with a friend",
-      buttonText: "Go to Game",
+      buttonText: "Create Game",
       handleClick: () => handleSubmit(),
       Icon: LaptopOutlined
     },

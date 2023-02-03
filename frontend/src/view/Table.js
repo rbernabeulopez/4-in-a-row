@@ -1,24 +1,12 @@
 import React, { useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
-import {makeSocketConnection, sendEvent, setMovementEventHandler} from "../request/webSocketRequest";
 import '../styles/table.css'
-import {Col, List, Row, Spin} from "antd";
+import { Button, Col, List, Row, Spin } from "antd";
 import GameRow from "../component/GameRow";
+import { useNavigate, useParams } from "react-router-dom";
+import { makeSocketConnection, setMovementEventHandler, sendEvent } from "../request/webSocketRequest";
 import { errorNotification } from "../util/notification";
 import { getGameById } from "../request/gameRequest";
-import Turn from "../component/Turn";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { makeSocketConnection, setMovementEventHandler } from "../../request/webSocketRequest";
-import './table.css'
-import { Button, Col, List, Row } from "antd";
-import GameRow from "../../component/GameRow";
-import { sendEvent } from "../../request/webSocketRequest";
-import { errorNotification } from "../../util/notification";
-import { getGameById } from "../../request/gameRequest";
 import Modal from 'react-bootstrap/Modal';
-import { Spin } from 'antd';
-import { InputGroup } from "react-bootstrap";
 
 export const Table = () => {
 

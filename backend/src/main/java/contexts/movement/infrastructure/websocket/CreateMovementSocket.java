@@ -33,9 +33,6 @@ public class CreateMovementSocket {
 
     @MessageMapping("make-movement")
     public void joinGame(@Payload CreateMovementRequest request) {
-        //te calcule si hay un ganador o empate y te devuelva un response.
-        // te devolveria un PAIR get first, y PAIR get second para obtener dos datos
-        // y si todo esta ok se guarda en base de datos
         Player player = playerFinder.findPlayer(request.getPlayerId());
         Game game = gameFinder.findGame(request.getGameId());
 
