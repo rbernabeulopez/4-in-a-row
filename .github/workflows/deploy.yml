@@ -34,8 +34,8 @@ jobs:
                 id: dockerhubPush
                 run: mvn clean verify -P build-docker-image -DskipTests
 
-            - name: Deploy by DockerHub
-              image uses: appleboy/ssh-action@master
+            - name: Deploy by DockerHub image
+              uses: appleboy/ssh-action@master
               id: deploy-image
               with:
                 host: ${{ secrets.SSH_HOST }}
