@@ -3,7 +3,7 @@ import "../styles/form.css";
 import {loginPlayer} from "../request/playerRequest";
 import {errorNotification} from "../util/notification";
 import {useNavigate} from "react-router-dom";
-import FormPlayerData from "../components/FormPlayerData";
+import FormPlayerData from "../component/FormPlayerData";
 
 const Login = () => {
     const navigate = useNavigate();

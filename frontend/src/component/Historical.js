@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Button, Col, Container, Row, Table} from 'react-bootstrap';
-// import { Table } from 'antd'
+import {Col, Container, Row, Table} from 'react-bootstrap';
 
 export const Historical = () => {
 

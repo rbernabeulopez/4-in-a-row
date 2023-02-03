@@ -4,8 +4,8 @@ import Login from "./view/Login";
 import NotFound from "./view/NotFound";
 import {useEffect} from "react";
 import { Historical } from "./component/Historical"
-import { CreateGame } from "./create-game/CreateGame";
-import {Table} from "./components/Table/Table";
+import { CreateGame } from "./view/CreateGame";
+import {Table} from "./view/Table";
 import JoinGame from "./view/JoinGame";
 
 
