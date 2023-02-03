@@ -2,6 +2,7 @@ import {Button, Card, Form, Input} from "antd";
 import {joinGame} from "../request/gameRequest";
 import {errorNotification} from "../util/notification";
 import {useNavigate} from "react-router-dom";
+import { sendEvent } from "../request/webSocketRequest";
 
 const JoinGame = () => {
 
@@ -11,6 +12,7 @@ const JoinGame = () => {
 
         joinGame(values.gameId).then(() => {
             navigate(`/table/${values.gameId}`);
+            // sendEvent(`service/v1/table/${values.gameId}`)
         }).catch((error) => {
             const message = error.response?.data?.message || "Something went wrong";
             errorNotification("Error joining game", message, "topRight");
