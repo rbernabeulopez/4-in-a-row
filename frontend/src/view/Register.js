@@ -2,7 +2,7 @@ import '../styles/form.css'
 import React from 'react';
 import { createPlayer } from '../request/playerRequest';
 import { useNavigate } from 'react-router-dom';
-import FormPlayerData from "../components/FormPlayerData";
+import FormPlayerData from "../component/FormPlayerData";
 import {errorNotification} from "../util/notification";
 
 export const Register = () => {

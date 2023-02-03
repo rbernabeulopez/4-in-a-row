@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Button, Col, Container, Row, Table} from 'react-bootstrap';
-// import { Table } from 'antd'
+import {Col, Container, Row, Table} from 'react-bootstrap';
 
 export const Historical = () => {
 
@@ -54,12 +53,12 @@ export const Historical = () => {
     // la magia del asunto está en como nos traemo el id
 
     useEffect(() => {
-      let number = localStorage.getItem("playerId");
+      let playerId = localStorage.getItem("playerId");
 
-        console.log(number)
+        console.log(playerId)
 
         axios({
-            url:`/api/v1/player/${number}/games`,
+            url:`/api/v1/player/${playerId}/games`,
             method: "GET",
         })
         .then((res) => {

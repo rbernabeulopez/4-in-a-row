@@ -35,8 +35,14 @@ public class MovementCreator {
         List<Movement> listMovements = movementFinder.findMovementByGameIdAndColumn(movement.getGame().getId(), movement.getCol());
         checkMovement(listMovements, movement);
         playerFinder.checkPlayerTurn(movement.getGame().getId(), movement.getPlayer().getId());
-        movementRepository.save(movement);
         Game game = gameFinder.findGame(movement.getGame().getId());
+        if(game.isFinished()){
+            throw new MovementException("Game is already finished");
+        }
+
+        movementRepository.save(movement);
+
+        game = gameFinder.findGame(movement.getGame().getId());
         Player winner = game.checkWinner();
         if(winner != null){
             gameModifier.setWinner(game, winner);

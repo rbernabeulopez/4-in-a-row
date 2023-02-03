@@ -46,7 +46,7 @@ const handleConnectionError = () => {
 const handleConnection = listenEvents
 
 export const makeSocketConnection = (gameId, playerId) => {
-    let Sock = new SockJS(`http://localhost:8080/service/v1`);
+    let Sock = new SockJS(`http://backend:8080/service/v1`);
     stompClient = over(Sock);
     stompClient.debug = null
     stompClient.connect({}, () => handleConnection(gameId, playerId), handleConnectionError);
