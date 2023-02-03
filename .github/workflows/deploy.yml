@@ -9,7 +9,7 @@ env:
     JAVA_VERSION: '17'
     JAVA_DISTRIBUTION: 'temurin'
     DOCKER_HUB_USERNAME: 'rbernabeulopez'
-    SSH_COMMAND: sh 4-in-a-row/.deploy/deploy.sh
+    SSH_COMMAND: cd 4-in-a-row/.deploy/ && sh deploy.sh
 
 jobs:
     deploy:
