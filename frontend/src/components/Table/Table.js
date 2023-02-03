@@ -7,7 +7,6 @@ import GameRow from "../../component/GameRow";
 import { sendEvent } from "../../request/webSocketRequest";
 import { errorNotification } from "../../util/notification";
 import { getGameById } from "../../request/gameRequest";
-import Turn from "../../component/Turn";
 import Modal from 'react-bootstrap/Modal';
 import { Spin } from 'antd';
 
@@ -122,6 +121,17 @@ export const Table =() => {
  
 
   const receiveMovement = (movementReceived) => {
+    if(movementReceived.joinedPlayer != undefined){
+      console.log(movementReceived + "algo mas para distiguirlo")
+      handleClose();
+      setData(prevState => {
+        const updateData = {...prevState, players: [...prevState.players, movementReceived.joinedPlayer]};
+        //initBoard(updateData.movements, updateData.movementReceived);
+        setIsPlayerTurn(true);
+        return updateData;
+    });
+      return;
+    }
     console.log(movementReceived.gameFinished + " esto es si ha acabado la partida");
       if(movementReceived.gameFinished) {
         setIsPlayerTurn(false);
@@ -191,7 +201,7 @@ export const Table =() => {
                     </Col>
                     </Row>
           <Row>
-           {isPlayerTurn && <Turn isPlayerTurn={isPlayerTurn}/>}
+           {isPlayerTurn ? <h1 style={{color: "darkblue"}}>Es tu turno</h1> : <h1 style={{color: "darkblue"}}>Te toca esperar...</h1>}
         </Row>
         </div>
     )
