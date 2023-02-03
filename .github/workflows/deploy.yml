@@ -9,6 +9,7 @@ env:
     JAVA_VERSION: '17'
     JAVA_DISTRIBUTION: 'temurin'
     DOCKER_HUB_USERNAME: 'rbernabeulopez'
+    SSH_COMMAND: sh 4-in-a-row/.deploy/deploy.sh
 
 jobs:
     deploy:
@@ -32,3 +33,13 @@ jobs:
             -   name: Push To Dockerhub
                 id: dockerhubPush
                 run: mvn clean verify -P build-docker-image -DskipTests
+
+            - name: Deploy by DockerHub
+              image uses: appleboy/ssh-action@master
+              id: deploy-image
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                password: ${{ secrets.SSH_PASSWORD }}
+                port: ${{ secrets.SSH_PORT }}
+                script: ${{ env.SSH_COMMAND }}
