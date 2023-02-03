@@ -4,56 +4,64 @@ import { Container, Row, Col } from "react-bootstrap";
 import { makeSocketConnection } from "../request/webSocketRequest";
 import { createGame } from "../request/gameRequest";
 import { Historical } from "../component/Historical";
+import {HistoryOutlined, LaptopOutlined, UserAddOutlined} from "@ant-design/icons";
+import Title from "antd/es/skeleton/Title";
+import {Button} from "antd";
+
+const Section = ({ title, description, buttonText, handleClick, Icon }) => {
+  return (
+      <div style={{ background: '#fff', padding: 24, textAlign: 'center' }}>
+        <Icon style={{ fontSize: '36px' }} />
+        <Title level={1}>{title}</Title>
+        <p>{description}</p>
+        <Button type="primary" onClick={handleClick}>{buttonText}</Button>
+      </div>
+  )
+}
 
 export const CreateGame = () => {
-  const [player1Id, setPlayer1Id] = useState(0);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     let playerId = localStorage.getItem("playerId");
     let gameId = await createGame(playerId);
     navigate(`/table/${gameId}`)
   };
 
-  const handleJoinGame = (event) => {
-    event.preventDefault();
-    navigate("/join-game");
-  };
-
-  const handleSubmit3 = (event) => {
-    event.preventDefault();
-    setPlayer1Id(localStorage.getItem("playerId"));
-    createGame(player1Id);
-    navigate("/historical");
-
-    // TODO: NAVIGATE TO GAME /: GAMEID
-    // TODO: SUBSCRIBE TO GAME VIA SOCKET
-  };
+  const sections = [
+    {
+      title: "Create Game",
+      description: "Start a new session with a friend",
+      buttonText: "Go to Game",
+      handleClick: () => handleSubmit(),
+      Icon: LaptopOutlined
+    },
+    {
+      title: "Join Game",
+      description: "Join an existing session",
+      buttonText: "Join Game",
+      handleClick: () => navigate("/join-game"),
+      Icon: UserAddOutlined
+    },
+    {
+      title: "Historic",
+      description: "See your historic games",
+      buttonText: "Historic",
+      handleClick: () => navigate("/historical"),
+      Icon: HistoryOutlined
+    }];
 
   return (
-    <Container>
-      <Row>
-        <Col sm={4}>
-          <button class="btn btn-primary mt-5" onClick={handleSubmit}>
-            Create Game
-          </button>
-        </Col>
+      <Row justify="center">
+        {
+          sections.map((section, index) => (
+              <>
+                <Col key={index} span={24 / sections.length}>
+                  <Section {...section} />
+                </Col>
+              </>
+          ))
+        }
       </Row>
-      <Row>
-        <Col sm={4}>
-          <button class="btn btn-primary mt-5" onClick={handleJoinGame}>
-            Join Game
-          </button>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={4}>
-          <button class="btn btn-primary mt-5" onClick={handleSubmit3}>
-            My historical
-          </button>
-        </Col>
-      </Row>
-    </Container>
   );
 };

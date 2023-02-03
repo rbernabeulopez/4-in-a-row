@@ -14,11 +14,6 @@ export const Table =() => {
 
   const { gameId } = useParams();
 
-  useEffect(() => {
-    let playerId = localStorage.getItem("playerId")
-    makeSocketConnection(gameId, playerId);
-  }, [])
-
     const [isPlayerTurn, setIsPlayerTurn] = useState(false);
 
     const [data, setData] = useState({})
@@ -57,33 +52,38 @@ export const Table =() => {
     }
 
 
-  useEffect(async ()=> {
 
-    const game = await getGameById(gameId);
+  useEffect(() => {
+    const startGame = async ()=> {
+      let playerId = localStorage.getItem("playerId")
+      makeSocketConnection(gameId, playerId);
+      const game = await getGameById(gameId);
 
-    if(!game.finished){
-      if(game.movements.length == 0 && game.players[0].id == localStorage.getItem("playerId")){
-        setIsPlayerTurn(true);
-      } else if(game.movements.length > 0 && game.movements.at(-1).player.id != localStorage.getItem("playerId")){
-        setIsPlayerTurn(true);
+      if(!game.finished){
+        if(game.movements.length == 0 && game.players[0].id == localStorage.getItem("playerId")){
+          setIsPlayerTurn(true);
+        } else if(game.movements.length > 0 && game.movements.at(-1).player.id != localStorage.getItem("playerId")){
+          setIsPlayerTurn(true);
+        }
+      }else {
+        setShowWin(true);
       }
-    }else {
-      setShowWin(true);
-    }
 
-  
 
-    setData({
-      players: game.players,
-      movements: game.movements,
-      winner: game.winner,
-      finished: game.finished
-    })
-    setMovementEventHandler(receiveMovement);
-    initBoard(game.movements, game.players);
-    if(game.players.length == 2){
-      handleClose();
+
+      setData({
+        players: game.players,
+        movements: game.movements,
+        winner: game.winner,
+        finished: game.finished
+      })
+      setMovementEventHandler(receiveMovement);
+      initBoard(game.movements, game.players);
+      if(game.players.length == 2){
+        handleClose();
+      }
     }
+    startGame()
   }, [])
 
  
