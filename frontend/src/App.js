@@ -41,6 +41,9 @@ const App = () => {
                 <Route path="/historical">
                     <Route index element={<Historical />}/>
                 </Route>
+                <Route path="/summary/:gameId">
+                    <Route index element={<Summary />}/>
+                </Route>
                 <Route path="/table/:gameId">
                     <Route index element={<Table/>}/>
                 </Route>

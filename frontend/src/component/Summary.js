@@ -1,90 +1,69 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Button, Col, Container, Row, Table} from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
+import GameRow from "../component/GameRow";
 
 export const Summary = () => {
 
-    //aqui metemos el id de la partida
-    const [id, setId] = useState();
+    const { gameId } = useParams();
 
-    //aqui meteremos los datos que recogemos de la base de datos
-    const [data, setData] = useState([]);
+    const [board, setBoard] = useState([]);
 
-    //datos de prueba
-    const datos = [
-        {
-          id: 1,
-          winner: {
-            id: 1,
-            name: "Pablo"
-          },
-          players: [
-            {
-              id: 1,
-              name: "Pablo"
-            },
-            {
-              id: 2,
-              name: "Chuchi"
-            }
-          ],
-          finished: true
-          /*
-          movements: [
-            {
-                id: 1,
-                player:{
-                    id: 1,
-                    name: "Pablo",
-                    },
-                row: 3,
-                col: 1,
-            }
-          ],
-          */
-        },
-      ]
-
-
-
-    //cuando tengamos el id con este useEffect hacemos una llamada para obtener 
-    //toda la información de la partida
     useEffect(() => {
 
         axios({
-            url: "/api/v1/1",
+            url: `/api/v1/game/${gameId}`,
             method: "GET",
         })
-        .then((res) => {
-            setData(res.data)
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res) => {
+                console.log("Recibido resumen")
+                console.log(res);
+                initBoard(res.data.movements, res.data.players)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }, []);
 
 
-    return(
+    // Starts new game
+    const initBoard = (movements = [], players) => {
+        // Create a blank 6x7 matrix
+        let generatedboard = [];
+        for (let r = 0; r < 6; r++) {
+            let row = [];
+            for (let c = 0; c < 7; c++) {
+                const movement = movements.find((movement) => movement.row === r && movement.col === c);
+                if (movement == null) {
+                    row.push(0);
+                } else if (movement.player.id === players[0].id) {
+                    row.push(1);
+                } else if (movement.player.id === players[1].id) {
+                    row.push(2);
+                } else {
+                    row.push(0);
+                }
+            }
+            generatedboard.push(row);
+        }
+        setBoard(generatedboard);
+
+    }
+
+
+    return (
         <Container>
-        <h1>Historico de partidas</h1>
+            <h1>Resumen de la partida</h1>
             <Row>
-                <Col>
-                    <Table striped bordered hover variant="dark">
-                        <thead>
-                            <tr>
-                            <th>Ganador: {datos.winner.name}</th>
-                            <th>Estatus: {datos.finished}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                {datos.map((elemento)=>(
-                                    <tr>
-                                    <td>{elemento}</td>
-                                    </tr>
-                                )
-                                )}
-                        </tbody>
-                    </Table>
+                <Col span={18}> <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                        {board.map((row, i) => (
+                            <GameRow key={i} row={row} />))}
+                    </tbody>
+                </table>
                 </Col>
             </Row>
         </Container>
